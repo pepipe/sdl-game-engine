@@ -1,7 +1,4 @@
-﻿#ifdef _WIN32
-#include <Windows.h>
-#endif
-
+﻿#include <SDL3/SDL_main.h>
 #include "Game/Game.h"
 
 int main(int argc, char* argv[])
@@ -15,10 +12,3 @@ int main(int argc, char* argv[])
     game.Run();
     return 0;
 }
-
-#ifdef _WIN32
-int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine, int nCmdShow) {
-    // Call main function
-    return main(__argc, __argv);
-}
-#endif

@@ -8,7 +8,7 @@ public:
     bool Init(const char* title, int width, int height);
     void Run();
     void Update();
-    void Render();
+    void Render() const;
     void HandleEvents();
     void Clean() const;
 

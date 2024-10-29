@@ -11,6 +11,7 @@ if (POLICY CMP0141)
 endif()
 
 # Add the SDL3 library
+set(CMAKE_PREFIX_PATH "${CMAKE_SOURCE_DIR}/libs/SDL") 
 find_package(SDL3 REQUIRED)
 
 # add source director

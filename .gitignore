@@ -1,2 +1,13 @@
 .vs/
 out/
+.idea/
+CMakeFiles/
+src/DeathRunSDL.dir/
+src/Debug/
+src/cmake_install.cmake
+DeathRunSDL.sln
+src/DeathRunSDL.vcxproj
+src/DeathRunSDL.vcxproj.filters
+src/DeathRunSDL.vcxproj.user
+cmake_install.cmake
+CMakeCache.txt

@@ -2,8 +2,7 @@
 
 Ball::Ball(const float xPos, const float yPos, const float size, const float speedX, const float speedY, const int screenWidth,
            const int screenHeight) :
-    _xPos(xPos),
-    _yPos(yPos),
+    GameObject(xPos, yPos),
     _size(size),
     _speedX(speedX),
     _speedY(speedY),

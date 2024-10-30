@@ -11,8 +11,6 @@ public:
     void Render(SDL_Renderer* renderer) const override;
 
 private:
-    float _xPos;
-    float _yPos;
     float _width;
     float _height;
     float _speed;

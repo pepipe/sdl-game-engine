@@ -1,8 +1,8 @@
-﻿# CMakeList.txt : CMake project for DeathRunSDL
+﻿# CMakeList.txt : CMake project for SDLEngine
 
 cmake_minimum_required (VERSION 3.8)
 
-project ("DeathRunSDL")
+project ("SDLEngine")
 
 # Enable Hot Reload for MSVC compilers if supported.
 if (POLICY CMP0141)
@@ -17,11 +17,11 @@ find_package(SDL3 REQUIRED)
 add_subdirectory(src)
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
-  set_property(TARGET DeathRunSDL PROPERTY CXX_STANDARD 20)
+  set_property(TARGET SDLEngine PROPERTY CXX_STANDARD 20)
 endif()
 
 # Set linker flags based on the compiler
 if(MSVC)
     set(CMAKE_GENERATOR_TOOLSET "v143")
-    set_target_properties(DeathRunSDL PROPERTIES LINK_FLAGS "/SUBSYSTEM:WINDOWS")
+    set_target_properties(SDLEngine PROPERTIES LINK_FLAGS "/SUBSYSTEM:WINDOWS")
 endif()

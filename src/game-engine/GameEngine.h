@@ -3,11 +3,11 @@
 
 #include "GameObjectManager.h"
 
-class Game {
+class GameEngine {
 public:
-    explicit Game(bool capFPS = false);
-    ~Game();
-    bool Init(const char* title, int width, int height);
+    explicit GameEngine(bool capFPS = false);
+    ~GameEngine();
+    virtual bool Init(const char* title, int width, int height);
     void Run();
     void Update();
     void Render() const;

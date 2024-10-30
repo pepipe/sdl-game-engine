@@ -1,15 +1,15 @@
 #include <iostream>
 
-#include "Game.h"
+#include "GameEngine.h"
 
-Game::Game(const bool capFPS) :
+GameEngine::GameEngine(const bool capFPS) :
 _capFPS(capFPS)
 {
 }
 
-bool Game::Init(const char* title, const int width, const int height)
+bool GameEngine::Init(const char* title, const int width, const int height)
 {
-    if (SDL_Init(SDL_INIT_VIDEO) < 0)
+    if (!SDL_Init(SDL_INIT_VIDEO))
     {
         std::cerr << "Failed to initialize SDL: " << SDL_GetError() << std::endl;
         return false;
@@ -36,7 +36,7 @@ bool Game::Init(const char* title, const int width, const int height)
     return true;
 }
 
-void Game::Run()
+void GameEngine::Run()
 {
     while (_isRunning)
     {
@@ -46,7 +46,7 @@ void Game::Run()
     }
 }
 
-void Game::HandleEvents()
+void GameEngine::HandleEvents()
 {
     SDL_Event event;
     while (SDL_PollEvent(&event))
@@ -55,13 +55,13 @@ void Game::HandleEvents()
     }
 }
 
-void Game::Update() {
+void GameEngine::Update() {
     if(_capFPS)
     {
         const auto time_to_wait = FRAME_TARGET_TIME - SDL_GetTicks() - _lastFrameTime;
         if(time_to_wait > 0 && time_to_wait <= FRAME_TARGET_TIME)
         {
-            SDL_Delay(time_to_wait);
+            SDL_Delay(static_cast<Uint32>(time_to_wait));
         }
     }
 
@@ -73,7 +73,7 @@ void Game::Update() {
     _gameObjectManager.Update(deltaTime);
 }
 
-void Game::Render() const
+void GameEngine::Render() const
 {
     SDL_SetRenderDrawColor(_renderer, 0, 0, 0, 255);
     SDL_RenderClear(_renderer);
@@ -84,13 +84,13 @@ void Game::Render() const
     SDL_RenderPresent(_renderer);
 }
 
-void Game::Clean() const
+void GameEngine::Clean() const
 {
     SDL_DestroyRenderer(_renderer);
     SDL_DestroyWindow(_window);
     SDL_Quit();
 }
 
-Game::~Game() {
+GameEngine::~GameEngine() {
     Clean();
 }

@@ -1,14 +1,15 @@
 ﻿#include <SDL3/SDL_main.h>
-#include "Game/Game.h"
+
+#include "GameEngine.h"
 
 int main(int argc, char* argv[])
 {
-    Game game;
-    if(!game.Init("Death Run", 1920, 1080))
+    GameEngine engine;
+    if(!engine.Init("Death Run", 1920, 1080))
     {
         return -1;
     }
 
-    game.Run();
+    engine.Run();
     return 0;
 }

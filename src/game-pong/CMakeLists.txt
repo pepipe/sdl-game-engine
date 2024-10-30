@@ -1,7 +1,8 @@
 # src/game-pong/CMakeLists.txt
 
 # Define the executable
-add_executable (PongGame "main.cpp" "PongGame.cpp")
+file(GLOB PONG_SRC "*.cpp")
+add_executable (PongGame ${PONG_SRC})
 
 # Link SDL3 Library
 target_link_libraries(PongGame PRIVATE GameEngine SDL3::SDL3)

@@ -1,6 +1,6 @@
 #include "GameObjectManager.h"
 
-void GameObjectManager::AddObject(std::unique_ptr<GameObject> obj)
+void GameObjectManager::AddObject(std::shared_ptr<GameObject> obj)
 {
     _gameObjects.push_back(std::move(obj));
 }

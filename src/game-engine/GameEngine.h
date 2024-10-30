@@ -9,9 +9,9 @@ public:
     ~GameEngine();
     virtual bool Init(const char* title, int width, int height);
     void Run();
-    void HandleEvents();
-    void Update();
-    void Render() const;
+    virtual void HandleEvents();
+    virtual void Update();
+    virtual void Render() const;
     void Clean() const;
 
 protected:

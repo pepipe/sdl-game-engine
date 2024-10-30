@@ -6,6 +6,7 @@ class Ball final : public GameObject
 {
 public:
     Ball(float xPos, float yPos, float size, float speedX, float speedY, int screenWidth, int screenHeight);
+    void FlipHorizontalMovement();
 
     void HandleEvents(const SDL_Event& event) override{/* No-op */};
     void Update(float deltaTime) override;

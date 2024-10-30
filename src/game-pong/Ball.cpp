@@ -12,6 +12,11 @@ Ball::Ball(const float xPos, const float yPos, const float size, const float spe
 {
 }
 
+void Ball::FlipHorizontalMovement()
+{
+    _speedX = -_speedX;
+}
+
 void Ball::Update(const float deltaTime)
 {
     _xPos += _speedX * deltaTime;
@@ -19,8 +24,6 @@ void Ball::Update(const float deltaTime)
 
     // Bounce off screen edges
     if (_yPos <= 0 || _yPos >= _screenHeight - GetSize()) _speedY = -_speedY;
-
-    //Collision2D::CheckCollision()
 }
 
 void Ball::Render(SDL_Renderer* renderer) const

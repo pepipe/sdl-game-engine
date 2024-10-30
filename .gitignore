@@ -1,5 +1,9 @@
 .vs/
-out/
 .idea/
+/out/
+/build/
+/builds/
 /cmake-build-debug/
 /cmake-build-release/
+/cmake-build-release-visual-studio/
+/cmake-build-debug-visual-studio/

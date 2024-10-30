@@ -1,5 +1,5 @@
 ﻿# CMakeList.txt : CMake project for DeathRunSDL
-#
+
 cmake_minimum_required (VERSION 3.8)
 
 project ("DeathRunSDL")
@@ -11,7 +11,8 @@ if (POLICY CMP0141)
 endif()
 
 # Add the SDL3 library
-set(CMAKE_PREFIX_PATH "${CMAKE_SOURCE_DIR}/libs/SDL") 
+include_directories("${CMAKE_SOURCE_DIR}/libs/SDL/include")
+set(CMAKE_PREFIX_PATH "${CMAKE_SOURCE_DIR}/libs/SDL")
 find_package(SDL3 REQUIRED)
 
 # add source director
@@ -22,8 +23,7 @@ if (CMAKE_VERSION VERSION_GREATER 3.12)
 endif()
 
 # Set linker flags based on the compiler
-if(MINGW)
-    set_target_properties(DeathRunSDL PROPERTIES LINK_FLAGS "-mwindows")
-elseif(MSVC)
+if(MSVC)
+    set(CMAKE_GENERATOR_TOOLSET "v143")
     set_target_properties(DeathRunSDL PROPERTIES LINK_FLAGS "/SUBSYSTEM:WINDOWS")
 endif()

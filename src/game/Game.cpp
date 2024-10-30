@@ -3,8 +3,7 @@
 #include "Game.h"
 
 Game::Game(const bool capFPS) :
-_capFPS(capFPS),
-ball ({ 20, 20, 15, 15 })
+_capFPS(capFPS)
 {
 }
 

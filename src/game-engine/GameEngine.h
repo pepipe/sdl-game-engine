@@ -14,6 +14,9 @@ public:
     void HandleEvents();
     void Clean() const;
 
+protected:
+    GameObjectManager _gameObjectManager;
+
 private:
     const int FPS = 60;
     const float FRAME_TARGET_TIME = 1000.0f / FPS;
@@ -23,5 +26,4 @@ private:
     SDL_Window* _window = nullptr;
     SDL_Renderer* _renderer = nullptr;
     Uint64 _lastFrameTime = 0;
-    GameObjectManager _gameObjectManager;
 };

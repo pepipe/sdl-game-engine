@@ -1,4 +1,4 @@
-﻿# CMakeList.txt : CMake project for SDLEngine
+﻿# Root CMakeLists.txt : CMake project for SDLEngine
 
 cmake_minimum_required (VERSION 3.8)
 
@@ -13,15 +13,11 @@ endif()
 # Add the SDL3 library
 find_package(SDL3 REQUIRED)
 
-# add source director
-add_subdirectory(src)
-
-if (CMAKE_VERSION VERSION_GREATER 3.12)
-  set_property(TARGET SDLEngine PROPERTY CXX_STANDARD 20)
-endif()
-
-# Set linker flags based on the compiler
+# Set the C++ standard and compiler flags
+set(CMAKE_CXX_STANDARD 20)
 if(MSVC)
     set(CMAKE_GENERATOR_TOOLSET "v143")
-    set_target_properties(SDLEngine PROPERTIES LINK_FLAGS "/SUBSYSTEM:WINDOWS")
 endif()
+
+# add source director
+add_subdirectory(src)

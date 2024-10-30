@@ -70,6 +70,7 @@ void Game::Update() {
     _lastFrameTime = SDL_GetTicks();
     
     // Update game objects here
+    _gameObjectManager.Update(deltaTime);
 }
 
 void Game::Render() const
@@ -78,6 +79,7 @@ void Game::Render() const
     SDL_RenderClear(_renderer);
 
     // Draw objects here
+    _gameObjectManager.Render(_renderer);
 
     SDL_RenderPresent(_renderer);
 }

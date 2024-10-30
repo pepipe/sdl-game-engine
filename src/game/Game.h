@@ -1,6 +1,8 @@
 #pragma once
 #include <SDL3/SDL.h>
 
+#include "GameObjectManager.h"
+
 class Game {
 public:
     explicit Game(bool capFPS = false);
@@ -21,4 +23,5 @@ private:
     SDL_Window* _window = nullptr;
     SDL_Renderer* _renderer = nullptr;
     Uint64 _lastFrameTime = 0;
+    GameObjectManager _gameObjectManager;
 };

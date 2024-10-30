@@ -1,6 +1,6 @@
 # src/game/CMakeLists.txt
 
-add_library(Game Game.cpp)
+add_library(Game Game.cpp GameObjectManager.cpp)
 
 # include directories for Game
 target_include_directories(Game PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})

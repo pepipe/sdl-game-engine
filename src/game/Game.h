@@ -3,7 +3,7 @@
 
 class Game {
 public:
-    Game();
+    explicit Game(bool capFPS = false);
     ~Game();
     bool Init(const char* title, int width, int height);
     void Run();
@@ -13,7 +13,12 @@ public:
     void Clean() const;
 
 private:
-    bool isRunning;
-    SDL_Window* window;
-    SDL_Renderer* renderer;
+    const int FPS = 60;
+    const float FRAME_TARGET_TIME = 1000.0f / FPS;
+
+    bool _capFPS;
+    bool _isRunning = false;
+    SDL_Window* _window = nullptr;
+    SDL_Renderer* _renderer = nullptr;
+    Uint64 _lastFrameTime = 0;
 };

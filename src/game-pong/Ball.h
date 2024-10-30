@@ -11,8 +11,9 @@ public:
     void Update(float deltaTime) override;
     void Render(SDL_Renderer* renderer) const override;
 
+    float GetSize() const;
+
 private:
-    float _size;
     float _speedX;
     float _speedY;
     int _screenWidth;

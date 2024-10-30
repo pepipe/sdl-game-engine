@@ -2,9 +2,7 @@
 
 Paddle::Paddle(const float xPos, const float yPos, const float width, const float height, const float speed,
                const bool isRightPlayer, const int screenHeight) :
-    GameObject(xPos, yPos),
-    _width(width),
-    _height(height),
+    GameObject(xPos, yPos, width, height),
     _speed(speed),
     _isRightPlayer(isRightPlayer),
     _screenHeight(screenHeight)

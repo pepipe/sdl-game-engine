@@ -11,10 +11,11 @@ public:
     void Run();
     virtual void HandleEvents();
     virtual void Update();
-    virtual void Render() const;
+    virtual void Render();
     void Clean() const;
 
 protected:
+    SDL_Renderer* _renderer = nullptr;
     GameObjectManager _gameObjectManager;
 
 private:
@@ -24,6 +25,5 @@ private:
     bool _capFPS;
     bool _isRunning = false;
     SDL_Window* _window = nullptr;
-    SDL_Renderer* _renderer = nullptr;
     Uint64 _lastFrameTime = 0;
 };

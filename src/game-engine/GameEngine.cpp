@@ -77,7 +77,7 @@ void GameEngine::Update()
     _gameObjectManager.Update(deltaTime);
 }
 
-void GameEngine::Render() const
+void GameEngine::Render()
 {
     SDL_SetRenderDrawColor(_renderer, 0, 0, 0, 255);
     SDL_RenderClear(_renderer);

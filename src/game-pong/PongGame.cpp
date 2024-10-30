@@ -35,6 +35,42 @@ void PongGame::Update()
     }
 }
 
+void PongGame::Render()
+{
+    SDL_SetRenderDrawColor(_renderer, 0, 0, 0, 255);
+    SDL_RenderClear(_renderer);
+
+    DrawNet(_renderer);
+    _gameObjectManager.Render(_renderer);
+
+    SDL_RenderPresent(_renderer);
+}
+
+void PongGame::DrawNet(SDL_Renderer* renderer)
+{
+    int screenWidth, screenHeight;
+    SDL_GetCurrentRenderOutputSize(renderer, &screenWidth, &screenHeight);
+
+    // Set dimensions for each square of the net
+    const int netWidth = 7;          // Width of each rectangle in the net
+    const int netHeight = 30;        // Height of each rectangle in the net
+    const int spacing = 20;           // Space between each rectangle in the net
+
+    // Set color for the net (e.g., white)
+    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+
+    // Draw the net
+    for (int y = 0; y < screenHeight; y += netHeight + spacing) {
+        SDL_FRect netRect = {
+            screenWidth / 2.0f - netWidth / 2.0f,
+            static_cast<float>(y),
+            static_cast<float>(netWidth),
+            static_cast<float>(netHeight)
+        };
+        SDL_RenderFillRect(renderer, &netRect);
+    }
+}
+
 // ReSharper disable once CppMemberFunctionMayBeConst
 void PongGame::HandleBallPaddleCollision()
 {

@@ -48,7 +48,7 @@ void Paddle::HandleEvents(const SDL_Event& event)
     {
         _movement = 1; // Move down
     }
-    else
+    else 
     {
         _movement = 0; // Stop if both keys are pressed
     }

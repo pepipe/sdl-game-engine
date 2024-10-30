@@ -1,5 +1,5 @@
-## Death Run SDL Version
-
+## SDL GameEngine
+Little game engine based on SDL.
 
 ### Build project on Windows
 #### Requirements

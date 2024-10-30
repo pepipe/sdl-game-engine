@@ -3,7 +3,7 @@
 #include "GameEngine.h"
 
 GameEngine::GameEngine(const bool capFPS) :
-_capFPS(capFPS)
+    _capFPS(capFPS)
 {
 }
 
@@ -52,23 +52,27 @@ void GameEngine::HandleEvents()
     while (SDL_PollEvent(&event))
     {
         if (event.type == SDL_EVENT_QUIT) _isRunning = false;
+
+        //handle events in game objects
+        _gameObjectManager.HandleEvents(event);
     }
 }
 
-void GameEngine::Update() {
-    if(_capFPS)
+void GameEngine::Update()
+{
+    if (_capFPS)
     {
-        const auto time_to_wait = FRAME_TARGET_TIME - SDL_GetTicks() - _lastFrameTime;
-        if(time_to_wait > 0 && time_to_wait <= FRAME_TARGET_TIME)
+        if (const auto timeToWait =
+            FRAME_TARGET_TIME - SDL_GetTicks() - _lastFrameTime; timeToWait > 0 && timeToWait <= FRAME_TARGET_TIME)
         {
-            SDL_Delay(static_cast<Uint32>(time_to_wait));
+            SDL_Delay(static_cast<Uint32>(timeToWait));
         }
     }
 
     // get a delta time factor converted to seconds to be used to update objects
     const auto deltaTime = (SDL_GetTicks() - _lastFrameTime) / 1000.0f;
     _lastFrameTime = SDL_GetTicks();
-    
+
     // Update game objects here
     _gameObjectManager.Update(deltaTime);
 }
@@ -91,6 +95,7 @@ void GameEngine::Clean() const
     SDL_Quit();
 }
 
-GameEngine::~GameEngine() {
+GameEngine::~GameEngine()
+{
     Clean();
 }

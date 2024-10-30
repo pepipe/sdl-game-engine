@@ -13,7 +13,7 @@ target_link_libraries(DeathRunSDL PRIVATE SDL3::SDL3 Game)
 if(WIN32)
     add_custom_command(TARGET DeathRunSDL POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_if_different
-            "${CMAKE_SOURCE_DIR}/libs/SDL/SDL3.dll"  # Path to SDL3.dll
+            "$ENV{SDL3_DIR}/bin/SDL3.dll"  # Path to SDL3.dll
             "$<TARGET_FILE_DIR:DeathRunSDL>"              # Output directory
     )
 endif()

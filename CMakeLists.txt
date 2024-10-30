@@ -11,8 +11,6 @@ if (POLICY CMP0141)
 endif()
 
 # Add the SDL3 library
-include_directories("${CMAKE_SOURCE_DIR}/libs/SDL/include")
-set(CMAKE_PREFIX_PATH "${CMAKE_SOURCE_DIR}/libs/SDL")
 find_package(SDL3 REQUIRED)
 
 # add source director

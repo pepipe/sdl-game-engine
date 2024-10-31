@@ -23,7 +23,15 @@ void Ball::Update(const float deltaTime)
     _yPos += _speedY * deltaTime;
 
     // Bounce off screen edges
-    if (_yPos <= 0 || _yPos >= _screenHeight - GetSize()) _speedY = -_speedY;
+    if (_yPos < 0)
+    {
+        _speedY = -_speedY;
+        _yPos = 0;
+    }else if(_yPos > _screenHeight - GetSize())
+    {
+        _speedY = -_speedY;
+        _yPos = _screenHeight - GetSize();
+    }
 }
 
 void Ball::Render(SDL_Renderer* renderer) const

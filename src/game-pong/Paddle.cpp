@@ -2,7 +2,7 @@
 
 Paddle::Paddle(const float xPos, const float yPos, const float width, const float height, const float speed,
                const bool isRightPlayer, const int screenHeight) :
-    GameObject(xPos, yPos, width, height),
+    GameObject2D(width, height, Vector2D(xPos, yPos)),
     _speed(speed),
     _isRightPlayer(isRightPlayer),
     _screenHeight(screenHeight)
@@ -53,14 +53,13 @@ void Paddle::HandleEvents(const SDL_Event& event)
 
 void Paddle::Update(const float deltaTime)
 {
-    _yPos += _movement * _speed * deltaTime;
-    if(_yPos <= 0) _yPos = 0;
-    else if (_yPos + _height >= _screenHeight) _yPos = _screenHeight - _height;
+    _position.y += _movement * _speed * deltaTime;
+    if(_position.y <= 0) _position.y = 0;
+    else if (_position.y + _height >= _screenHeight) _position.y = _screenHeight - _height;
 }
 
 void Paddle::Render(SDL_Renderer* renderer) const
 {
-    const SDL_FRect rect = {_xPos, _yPos, _width, _height};
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-    SDL_RenderFillRect(renderer, &rect);
+    GameObject2D::Render(renderer);
 }

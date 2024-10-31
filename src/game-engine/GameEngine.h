@@ -17,6 +17,8 @@ public:
 protected:
     SDL_Renderer* _renderer = nullptr;
     GameObjectManager _gameObjectManager;
+    int _screenWidth;
+    int _screenHeight;
 
 private:
     const int FPS = 60;

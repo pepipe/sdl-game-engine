@@ -1,5 +1,8 @@
 #include "PongGame.h"
 
+#include <iostream>
+#include <Random.h>
+
 #include "Ball.h"
 #include "Paddle.h"
 #include "Collision2D.h"
@@ -11,11 +14,11 @@ bool PongGame::Init(const char* title, const int width, const int height)
     // Create paddles and ball
     _player1 = std::make_shared<Paddle>(300.0f, height / 2.0f - 50, 10.0f, 100.0f, 350.0f, false, height);
     _player2 = std::make_shared<Paddle>(width - 310.0f, height / 2.0f - 50, 10.0f, 100.0f, 350.0f, true, height);
-    _ball = std::make_shared<Ball>(width / 2.0f, height / 2.0f, 10.0f, 200.0f, 200.0f, width, height);
     
     _gameObjectManager.AddObject(_player1);
     _gameObjectManager.AddObject(_player2);
-    _gameObjectManager.AddObject(_ball);
+
+    SpawnBall();
 
     return true;
 }
@@ -24,6 +27,8 @@ void PongGame::Update()
 {
     GameEngine::Update();
 
+    if(!_ball || !_player1 || !_player2) return;
+    
     // Check for collisions
     if (Collision2D::CheckCollision(_ball->GetRect(), _player1->GetRect())) {
         // Handle collision with player1
@@ -33,6 +38,8 @@ void PongGame::Update()
         // Handle collision with player2
         HandleBallPaddleCollision();
     }
+
+    BallCheckHorizontalExit();
 }
 
 void PongGame::Render()
@@ -46,33 +53,67 @@ void PongGame::Render()
     SDL_RenderPresent(_renderer);
 }
 
-void PongGame::DrawNet(SDL_Renderer* renderer)
+void PongGame::DrawNet(SDL_Renderer* renderer) const
 {
     int screenWidth, screenHeight;
     SDL_GetCurrentRenderOutputSize(renderer, &screenWidth, &screenHeight);
-
-    // Set dimensions for each square of the net
-    const int netWidth = 7;          // Width of each rectangle in the net
-    const int netHeight = 30;        // Height of each rectangle in the net
-    const int spacing = 20;           // Space between each rectangle in the net
 
     // Set color for the net (e.g., white)
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 
     // Draw the net
-    for (int y = 0; y < screenHeight; y += netHeight + spacing) {
+    for (int y = 0; y < screenHeight; y += NET_HEIGHT + NET_SPACING) {
         SDL_FRect netRect = {
-            screenWidth / 2.0f - netWidth / 2.0f,
+            screenWidth / 2.0f - NET_WIDTH / 2.0f,
             static_cast<float>(y),
-            static_cast<float>(netWidth),
-            static_cast<float>(netHeight)
+            static_cast<float>(NET_WIDTH),
+            static_cast<float>(NET_HEIGHT)
         };
         SDL_RenderFillRect(renderer, &netRect);
     }
+}
+
+void PongGame::SpawnBall()
+{
+    int xDirection = Random::GetRandomNumber(0, 1);
+    xDirection = xDirection == 0 ? -1 : xDirection;
+    float speedX = Random::GetRandomNumber(200.0f, 400.0f);
+    speedX *= static_cast<float>(xDirection);
+
+    float speedY = Random::GetRandomNumber(200.0f, 300.0f);
+    
+    _ball = std::make_shared<Ball>(_screenWidth / 2.0f, _screenHeight / 2.0f, 10.0f, speedX, speedY,
+        _screenWidth, _screenHeight);
+    _gameObjectManager.AddObject(_ball);
 }
 
 // ReSharper disable once CppMemberFunctionMayBeConst
 void PongGame::HandleBallPaddleCollision()
 {
     _ball->FlipHorizontalMovement();
+    auto ballSpeed = _ball->GetSpeed();
+    ballSpeed.x += ballSpeed.x * 0.05f;
+    _ball->SetSpeed(ballSpeed);
+    std::cout << "Ball Speed: " << _scorePlayer1.GetScore() << std::endl;
+}
+
+void PongGame::BallCheckHorizontalExit()
+{
+    if(!_ball) return;
+
+    if (_ball->GetPos().x + _ball->GetSize() > 0 && _ball->GetPos().x < _screenWidth)
+        return;
+
+    if (_ball->GetPos().x <= 0)
+    {
+        _scorePlayer2.IncreaseScore();
+    }
+    else if (_ball->GetPos().x >= _screenWidth)
+    {
+        _scorePlayer1.IncreaseScore();
+    }
+
+    std::cout << "Player 1 Score: " << _scorePlayer1.GetScore() << std::endl;
+    std::cout << "Player 2 Score: " << _scorePlayer2.GetScore() << std::endl;
+    SpawnBall();
 }

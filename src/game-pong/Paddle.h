@@ -1,7 +1,10 @@
 #pragma once
-#include <GameObject.h>
 
-class Paddle final : public GameObject
+#include <SDL3/SDL_render.h>
+
+#include "GameObject2D.h"
+
+class Paddle final : public GameObject2D
 {
 public:
     Paddle(float xPos, float yPos, float width, float height, float speed, bool isRightPlayer, int screenHeight);

@@ -3,6 +3,8 @@
 #include "GameEngine.h"
 #include "Ball.h"
 #include "Paddle.h"
+#include "Score.h"
+
 
 class PongGame final : public GameEngine
 {
@@ -12,10 +14,19 @@ public:
     void Render() override;
 
 private:
-    static void DrawNet(SDL_Renderer* renderer);
+    void DrawNet(SDL_Renderer* renderer) const;
+    void SpawnBall();
     void HandleBallPaddleCollision();
+    void BallCheckHorizontalExit();
+
+    // Net configuration
+    const int NET_WIDTH = 7; // Width of each rectangle in the net
+    const int NET_HEIGHT = 30; // Height of each rectangle in the net
+    const int NET_SPACING = 20; // Space between each rectangle in the net
 
     std::shared_ptr<Paddle> _player1;
     std::shared_ptr<Paddle> _player2;
     std::shared_ptr<Ball> _ball;
+    Score _scorePlayer1;
+    Score _scorePlayer2;
 };

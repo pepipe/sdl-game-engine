@@ -1,15 +1,15 @@
 # src/game-engine/CMakeLists.txt
 
-file(GLOB GAME_ENGINE_SRC "*.cpp")
-file(GLOB OBJECTS_SRC "objects/*.cpp")
-file(GLOB PHYSICS_SRC "physics/*.cpp")
-add_library(GameEngine STATIC ${GAME_ENGINE_SRC} ${OBJECTS_SRC} ${PHYSICS_SRC})
+file(GLOB_RECURSE GAME_ENGINE_SRC "*.cpp" "*.h")
+add_library(GameEngine STATIC ${GAME_ENGINE_SRC})
 
 # include directories for GameEngine
 target_include_directories(GameEngine PUBLIC 
         ${CMAKE_CURRENT_SOURCE_DIR}
+        ${CMAKE_CURRENT_SOURCE_DIR}/math
         ${CMAKE_CURRENT_SOURCE_DIR}/objects
         ${CMAKE_CURRENT_SOURCE_DIR}/physics
+        ${CMAKE_CURRENT_SOURCE_DIR}/utilities
 )
 
 # Link SDL

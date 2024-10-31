@@ -4,9 +4,8 @@
 
 Ball::Ball(const float xPos, const float yPos, const float size, const float speedX, const float speedY, const int screenWidth,
            const int screenHeight) :
-    GameObject(xPos, yPos, size, size),
-    _speedX(speedX),
-    _speedY(speedY),
+    GameObject2D(size, size, Vector2D(xPos, yPos)),
+    _speed(speedX, speedY),
     _screenWidth(screenWidth),
     _screenHeight(screenHeight)
 {
@@ -14,31 +13,7 @@ Ball::Ball(const float xPos, const float yPos, const float size, const float spe
 
 void Ball::FlipHorizontalMovement()
 {
-    _speedX = -_speedX;
-}
-
-void Ball::Update(const float deltaTime)
-{
-    _xPos += _speedX * deltaTime;
-    _yPos += _speedY * deltaTime;
-
-    // Bounce off screen edges
-    if (_yPos < 0)
-    {
-        _speedY = -_speedY;
-        _yPos = 0;
-    }else if(_yPos > _screenHeight - GetSize())
-    {
-        _speedY = -_speedY;
-        _yPos = _screenHeight - GetSize();
-    }
-}
-
-void Ball::Render(SDL_Renderer* renderer) const
-{
-    const SDL_FRect rect = {_xPos, _yPos, GetSize(), GetSize()};
-    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-    SDL_RenderFillRect(renderer, &rect);
+    _speed.x = -_speed.x;
 }
 
 float Ball::GetSize() const
@@ -46,3 +21,41 @@ float Ball::GetSize() const
     return _width;
 }
 
+Vector2D Ball::GetPos() const
+{
+    return _position;
+}
+
+Vector2D Ball::GetSpeed() const
+{
+    return _speed;
+}
+
+void Ball::SetSpeed(const Vector2D& speed)
+{
+    _speed = speed;
+}
+
+
+void Ball::Update(const float deltaTime)
+{
+    _position.x += _speed.x * deltaTime;
+    _position.y += _speed.y * deltaTime;
+
+    // Bounce off screen edges
+    if (_position.y < 0)
+    {
+        _speed.y = -_speed.y;
+        _position.y = 0;
+    }else if(_position.y > _screenHeight - GetSize())
+    {
+        _speed.y = -_speed.y;
+        _position.y = _screenHeight - GetSize();
+    }
+}
+
+void Ball::Render(SDL_Renderer* renderer) const
+{
+    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+    GameObject2D::Render(renderer);
+}

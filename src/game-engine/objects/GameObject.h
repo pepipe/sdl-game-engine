@@ -5,14 +5,9 @@
 class GameObject
 {
 public:
-    GameObject(const float xPos, const float yPos, const float width, const float height) :
-        _xPos(xPos), _yPos(yPos), _width(width), _height(height)
+    GameObject(const float width, const float height) :
+        _width(width), _height(height)
     {
-    }
-
-    SDL_FRect GetRect() const
-    {
-        return {_xPos, _yPos, _width, _height};
     }
 
     virtual void HandleEvents(const SDL_Event& event) = 0;
@@ -21,8 +16,6 @@ public:
     virtual ~GameObject() = default;
 
 protected:
-    float _xPos;
-    float _yPos;
     float _width;
     float _height;
 };

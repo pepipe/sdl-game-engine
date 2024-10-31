@@ -15,6 +15,8 @@ bool GameEngine::Init(const char* title, const int width, const int height)
         return false;
     }
 
+    _screenWidth = width;
+    _screenHeight = height;
     _window = SDL_CreateWindow(title, width, height, SDL_WINDOW_RESIZABLE);
     if (!_window)
     {

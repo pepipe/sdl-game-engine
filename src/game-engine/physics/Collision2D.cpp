@@ -1,6 +1,6 @@
 #include "Collision2D.h"
 
-bool Collision2D::CheckCollision(const SDL_Rect& a, const SDL_Rect& b)
+bool Collision2D::CheckCollision(const SDL_FRect& a, const SDL_FRect& b)
 {
     //AABB (Axis-Aligned Bounding Box)
     return a.x < b.x + b.w &&

@@ -4,5 +4,5 @@
 class Collision2D
 {
 public:
-    static bool CheckCollision(const SDL_Rect& a, const SDL_Rect& b);
+    static bool CheckCollision(const SDL_FRect& a, const SDL_FRect& b);
 };

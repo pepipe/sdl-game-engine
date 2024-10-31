@@ -10,9 +10,9 @@ public:
     {
     }
 
-    SDL_Rect GetRect() const
+    SDL_FRect GetRect() const
     {
-        return {static_cast<int>(_xPos), static_cast<int>(_yPos), static_cast<int>(_width), static_cast<int>(_height)};
+        return {_xPos, _yPos, _width, _height};
     }
 
     virtual void HandleEvents(const SDL_Event& event) = 0;

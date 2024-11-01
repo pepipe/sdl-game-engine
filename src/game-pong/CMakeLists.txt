@@ -15,15 +15,14 @@ endif()
 # Copy SDL3.dll to the output directory after build (windows specific)
 if(WIN32)
     # Default to the Release DLL unless the build type is Debug
-    set(SDL_DLL "${CMAKE_SOURCE_DIR}/sdk/sdl/windows/SDL3.dll")
-
+    set(SDL_DLL "${CMAKE_BINARY_DIR}/external/SDL3/SDL3.dll")   # Release DLL
     if(CMAKE_BUILD_TYPE MATCHES Debug)
-        set(SDL_DLL "${CMAKE_SOURCE_DIR}/sdk/sdl/windows/SDL3d.dll")  # Debug DLL
+        set(SDL_DLL "${CMAKE_BINARY_DIR}/external/SDL3/SDL3.dll")  # Debug DLL
     endif()
 
     add_custom_command(TARGET PongGame POST_BUILD
             COMMAND ${CMAKE_COMMAND} -E copy_if_different
             "${SDL_DLL}" # Path to SDL dll
-            "$<TARGET_FILE_DIR:PongGame>/SDL3.dll"              # Output directory
+            "$<TARGET_FILE_DIR:PongGame>/SDL3.dll" # Output directory
     )
 endif()

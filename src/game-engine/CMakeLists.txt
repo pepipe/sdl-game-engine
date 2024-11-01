@@ -13,5 +13,6 @@ target_include_directories(GameEngine PUBLIC
 )
 
 # Link SDL
+target_include_directories(GameEngine PRIVATE ${CMAKE_SOURCE_DIR}/external/SDL3/include/SDL3)
 target_link_libraries(GameEngine PRIVATE SDL3::SDL3)
 #target_link_libraries(Game PRIVATE SDL3_image::SDL3_image)

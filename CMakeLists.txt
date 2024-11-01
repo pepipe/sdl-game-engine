@@ -14,6 +14,7 @@ set(CMAKE_CXX_STANDARD 20)
 
 # Add SDL3 as a subdirectory instead of using find_package
 add_subdirectory(external/SDL3)
+add_subdirectory(external/SDL3_mixer)
 
 # Add the main source directories
 add_subdirectory(src)

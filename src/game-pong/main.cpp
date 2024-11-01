@@ -6,7 +6,7 @@
 int main(int argc, char* argv[])
 {
     PongGame game;
-    if (!game.Init("Pong", 1920, 1080))
+    if (!game.Init("Pong", 1600, 900))
     {
         return -1;
     }

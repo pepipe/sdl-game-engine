@@ -12,8 +12,9 @@ bool PongGame::Init(const char* title, const int width, const int height)
     if (!GameEngine::Init(title, width, height)) return false;
 
     // Create paddles and ball
-    _player1 = std::make_shared<Paddle>(300.0f, height / 2.0f - 50, 10.0f, 100.0f, 350.0f, false, height);
-    _player2 = std::make_shared<Paddle>(width - 310.0f, height / 2.0f - 50, 10.0f, 100.0f, 350.0f, true, height);
+    // Calculate positions based on screen dimensions
+    _player1 = std::make_shared<Paddle>(width * 0.05f, height / 2.0f - PADDLE_HEIGHT / 2, PADDLE_WIDTH, PADDLE_HEIGHT, PADDLE_SPEED, false, height);
+    _player2 = std::make_shared<Paddle>(width * 0.95f - PADDLE_WIDTH, height / 2.0f - PADDLE_HEIGHT / 2, PADDLE_WIDTH, PADDLE_HEIGHT, PADDLE_SPEED, true, height);
     
     _gameObjectManager.AddObject(_player1);
     _gameObjectManager.AddObject(_player2);
@@ -75,14 +76,16 @@ void PongGame::DrawNet(SDL_Renderer* renderer) const
 
 void PongGame::SpawnBall()
 {
+    if(_ball) _gameObjectManager.RemoveObject(_ball);
+
     int xDirection = Random::GetRandomNumber(0, 1);
     xDirection = xDirection == 0 ? -1 : xDirection;
-    float speedX = Random::GetRandomNumber(200.0f, 400.0f);
+    float speedX = Random::GetRandomNumber(BALL_MIN_SPEED_X, BALL_MAX_SPEED_X);
     speedX *= static_cast<float>(xDirection);
 
-    float speedY = Random::GetRandomNumber(200.0f, 300.0f);
+    float speedY = Random::GetRandomNumber(BALL_MIN_SPEED_Y, BALL_MAX_SPEED_Y);
     
-    _ball = std::make_shared<Ball>(_screenWidth / 2.0f, _screenHeight / 2.0f, 10.0f, speedX, speedY,
+    _ball = std::make_shared<Ball>(_screenWidth / 2.0f, _screenHeight / 2.0f, BALL_SIZE, speedX, speedY,
         _screenWidth, _screenHeight);
     _gameObjectManager.AddObject(_ball);
 }

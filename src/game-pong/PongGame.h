@@ -19,6 +19,17 @@ private:
     void HandleBallPaddleCollision();
     void BallCheckHorizontalExit();
 
+    // Game Configuration
+    // Paddle Configuration
+    const float PADDLE_WIDTH = 10.0f;
+    const float PADDLE_HEIGHT = 100.0f;
+    const float PADDLE_SPEED = 350.0f;
+    //Ball Configuration
+    const float BALL_MIN_SPEED_X = 100.0f;
+    const float BALL_MAX_SPEED_X = 300.0f;
+    const float BALL_MIN_SPEED_Y = 100.0f;
+    const float BALL_MAX_SPEED_Y = 200.0f;
+    const float BALL_SIZE = 10.0f;
     // Net configuration
     const int NET_WIDTH = 7; // Width of each rectangle in the net
     const int NET_HEIGHT = 30; // Height of each rectangle in the net

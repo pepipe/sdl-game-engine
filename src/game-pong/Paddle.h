@@ -8,6 +8,7 @@ class Paddle final : public GameObject2D
 {
 public:
     Paddle(float xPos, float yPos, float width, float height, float speed, bool isRightPlayer, int screenHeight);
+    Vector2D GetPosition() const;
 
     void HandleEvents(const SDL_Event& event) override;
     void Update(float deltaTime) override;

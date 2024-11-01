@@ -22,7 +22,7 @@ public:
 
     void Render(SDL_Renderer* renderer) const override
     {
-        SDL_FRect rect = GetRect();
+        const SDL_FRect rect = GetRect();
         SDL_RenderFillRect(renderer, &rect);
     }
 

@@ -8,7 +8,8 @@ public:
     Ball(float xPos, float yPos, float size, float speedX, float speedY, int screenWidth, int screenHeight);
     void FlipHorizontalMovement();
     float GetSize() const;
-    Vector2D GetPos() const;
+    Vector2D GetPosition() const;
+    void SetPos(Vector2D newPos);
     Vector2D GetSpeed() const;
     void SetSpeed(const Vector2D& speed);
 

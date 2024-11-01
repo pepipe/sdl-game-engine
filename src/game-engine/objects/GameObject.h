@@ -9,6 +9,8 @@ public:
         _width(width), _height(height)
     {
     }
+    float GetWidth() const {return _width;}
+    float GetHeight() const {return _height;}
 
     virtual void HandleEvents(const SDL_Event& event) = 0;
     virtual void Update(float deltaTime) = 0;

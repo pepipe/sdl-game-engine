@@ -29,15 +29,19 @@ void PongGame::Update()
     GameEngine::Update();
 
     if(!_ball || !_player1 || !_player2) return;
-    
+
     // Check for collisions
     if (Collision2D::CheckCollision(_ball->GetRect(), _player1->GetRect())) {
         // Handle collision with player1
-        HandleBallPaddleCollision();
+        std::cout << "Collision2D::CheckCollision Player1" << std::endl;
+        const auto newPos = Vector2D(_player1->GetPosition().x + _player1->GetWidth(), _ball->GetPosition().y);
+        HandleBallPaddleCollision(newPos);
     }
     if (Collision2D::CheckCollision(_ball->GetRect(), _player2->GetRect())) {
         // Handle collision with player2
-        HandleBallPaddleCollision();
+        std::cout << "Collision2D::CheckCollision Player2" << std::endl;
+        const auto newPos = Vector2D(_player2->GetPosition().x - _ball->GetWidth(), _ball->GetPosition().y);
+        HandleBallPaddleCollision(newPos);
     }
 
     BallCheckHorizontalExit();
@@ -91,12 +95,13 @@ void PongGame::SpawnBall()
 }
 
 // ReSharper disable once CppMemberFunctionMayBeConst
-void PongGame::HandleBallPaddleCollision()
+void PongGame::HandleBallPaddleCollision(const Vector2D& newPos)
 {
     _ball->FlipHorizontalMovement();
     auto ballSpeed = _ball->GetSpeed();
     ballSpeed.x += ballSpeed.x * 0.05f;
     _ball->SetSpeed(ballSpeed);
+    _ball->SetPos(newPos);
     std::cout << "Ball Speed: " << _scorePlayer1.GetScore() << std::endl;
 }
 
@@ -104,14 +109,14 @@ void PongGame::BallCheckHorizontalExit()
 {
     if(!_ball) return;
 
-    if (_ball->GetPos().x + _ball->GetSize() > 0 && _ball->GetPos().x < _screenWidth)
+    if (_ball->GetPosition().x + _ball->GetSize() > 0 && _ball->GetPosition().x < _screenWidth)
         return;
 
-    if (_ball->GetPos().x <= 0)
+    if (_ball->GetPosition().x <= 0)
     {
         _scorePlayer2.IncreaseScore();
     }
-    else if (_ball->GetPos().x >= _screenWidth)
+    else if (_ball->GetPosition().x >= _screenWidth)
     {
         _scorePlayer1.IncreaseScore();
     }

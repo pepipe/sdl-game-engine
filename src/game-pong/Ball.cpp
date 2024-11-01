@@ -21,10 +21,16 @@ float Ball::GetSize() const
     return _width;
 }
 
-Vector2D Ball::GetPos() const
+Vector2D Ball::GetPosition() const
 {
     return _position;
 }
+
+void Ball::SetPos(const Vector2D newPos)
+{
+    _position = newPos;
+}
+
 
 Vector2D Ball::GetSpeed() const
 {

@@ -9,6 +9,12 @@ Paddle::Paddle(const float xPos, const float yPos, const float width, const floa
 {
 }
 
+Vector2D Paddle::GetPosition() const
+{
+    return _position;
+}
+
+
 void Paddle::HandleEvents(const SDL_Event& event)
 {
     const auto keyUp = _isRightPlayer ? SDLK_UP : SDLK_W;

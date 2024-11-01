@@ -16,7 +16,7 @@ public:
 private:
     void DrawNet(SDL_Renderer* renderer) const;
     void SpawnBall();
-    void HandleBallPaddleCollision();
+    void HandleBallPaddleCollision(const Vector2D& newPos);
     void BallCheckHorizontalExit();
 
     // Game Configuration
@@ -25,10 +25,10 @@ private:
     const float PADDLE_HEIGHT = 100.0f;
     const float PADDLE_SPEED = 350.0f;
     //Ball Configuration
-    const float BALL_MIN_SPEED_X = 100.0f;
-    const float BALL_MAX_SPEED_X = 300.0f;
-    const float BALL_MIN_SPEED_Y = 100.0f;
-    const float BALL_MAX_SPEED_Y = 200.0f;
+    const float BALL_MIN_SPEED_X = 250.0f;
+    const float BALL_MAX_SPEED_X = 450.0f;
+    const float BALL_MIN_SPEED_Y = 150.0f;
+    const float BALL_MAX_SPEED_Y = 300.0f;
     const float BALL_SIZE = 10.0f;
     // Net configuration
     const int NET_WIDTH = 7; // Width of each rectangle in the net

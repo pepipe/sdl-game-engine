@@ -17,7 +17,7 @@ bool GameEngine::Init(const char* title, const int width, const int height)
 
     _screenWidth = width;
     _screenHeight = height;
-    _window = SDL_CreateWindow(title, width, height, SDL_WINDOW_RESIZABLE);
+    _window = SDL_CreateWindow(title, width, height, SDL_WINDOW_INPUT_FOCUS);
     if (!_window)
     {
         std::cerr << "Failed to create window: " << SDL_GetError() << std::endl;

@@ -8,9 +8,9 @@ add_executable (PongGame ${PONG_SRC})
 target_link_libraries(PongGame PRIVATE GameEngine SDL3::SDL3)
 
 # Set the subsystem for Windows (only necessary for executables)
-if(MSVC)
-    set_target_properties(PongGame PROPERTIES LINK_FLAGS "/SUBSYSTEM:WINDOWS")
-endif()
+#if(MSVC)
+#    set_target_properties(PongGame PROPERTIES LINK_FLAGS "/SUBSYSTEM:WINDOWS")
+#endif()
 
 # Copy SDL3.dll to the output directory after build (windows specific)
 if(WIN32)

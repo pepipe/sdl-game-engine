@@ -14,7 +14,5 @@ Little game engine based on SDL.
 	6. cmake --build . --config Debug 
 	7. cmake --install . --config Release (need admin) 
 	8. cmake --install . --config Debug (need admin) 
-	9. Setup windows enviroment SDL3_DIR pointing to C:\Program Files (x86)\SDL3 (dir created in 7 & 8)
-	10. Rename the Debug SDL3.DLL to SDL3d.DLL and put in the bin folder inside the sdl3 in program files.
 
 check here: https://github.com/libsdl-org/SDL/blob/preview-3.1.3/docs/README-cmake.md

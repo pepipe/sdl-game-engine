@@ -5,19 +5,21 @@ file(GLOB PONG_SRC "*.cpp")
 add_executable (PongGame ${PONG_SRC})
 
 # Link SDL3 Library
-target_link_libraries(PongGame PRIVATE GameEngine SDL3::SDL3)
+target_link_libraries(PongGame PRIVATE GameEngine SDL3)
 
 # Set the subsystem for Windows (only necessary for executables)
-#if(MSVC)
-#    set_target_properties(PongGame PROPERTIES LINK_FLAGS "/SUBSYSTEM:WINDOWS")
-#endif()
+if(MSVC)
+    set_target_properties(PongGame PROPERTIES LINK_FLAGS "/SUBSYSTEM:WINDOWS")
+endif()
 
 # Copy SDL3.dll to the output directory after build (windows specific)
 if(WIN32)
     # Default to the Release DLL unless the build type is Debug
-    set(SDL_DLL "${CMAKE_BINARY_DIR}/external/SDL3/SDL3.dll")   # Release DLL
+    set(SDL_DLL "${CMAKE_SOURCE_DIR}/sdk/sdl/release/SDL3.dll")   # Release DLL
+    set(SDL_MIXER_DLL "${CMAKE_SOURCE_DIR}/sdk/sdl/release/SDL3_mixer.dll")
     if(CMAKE_BUILD_TYPE MATCHES Debug)
-        set(SDL_DLL "${CMAKE_BINARY_DIR}/external/SDL3/SDL3.dll")  # Debug DLL
+        set(SDL_DLL "${CMAKE_SOURCE_DIR}/sdk/sdl/debug/SDL3.dll")  # Debug DLL
+        set(SDL_MIXER_DLL "${CMAKE_SOURCE_DIR}/sdk/sdl/debug/SDL3_mixer.dll")
     endif()
 
     add_custom_command(TARGET PongGame POST_BUILD

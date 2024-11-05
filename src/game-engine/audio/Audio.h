@@ -7,7 +7,7 @@
 class Audio
 {
 public:
-    static bool Init(SDL_AudioDeviceID deviceId, const SDL_AudioSpec* desiredSpec);
+    bool Init(SDL_AudioDeviceID deviceId, const SDL_AudioSpec* desiredSpec);
     void LoadSound(const std::string& name, const std::string& path);
     void PlaySound(const std::string& name, int loops = 0);
     void Clean();

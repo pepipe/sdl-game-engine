@@ -8,8 +8,7 @@
 class Text
 {
 public:
-    // Initialize SDL_ttf
-    static bool Init();
+    bool Init();
 
     // Load a font
     bool LoadFont(const std::string& name, const std::string& path, int size);

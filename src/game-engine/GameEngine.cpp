@@ -46,6 +46,12 @@ bool GameEngine::InitAudio(const SDL_AudioDeviceID deviceId, const SDL_AudioSpec
     return _audioInit;
 }
 
+bool GameEngine::InitText()
+{
+    _textInit = _text.Init();
+    return _textInit;
+}
+
 
 void GameEngine::Run()
 {

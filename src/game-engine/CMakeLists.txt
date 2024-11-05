@@ -16,3 +16,4 @@ target_include_directories(GameEngine PUBLIC
 # Link SDL
 target_link_libraries(GameEngine PRIVATE SDL3)
 target_link_libraries(GameEngine PRIVATE SDL3_mixer)
+target_link_libraries(GameEngine PRIVATE SDL3_ttf)

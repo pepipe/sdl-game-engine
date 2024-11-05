@@ -18,6 +18,7 @@ private:
     void SpawnBall();
     void HandleBallPaddleCollision(const Vector2D& newPos);
     void BallCheckHorizontalExit();
+    void OnBallBounce(const Event& event);
 
     // Game Configuration
     // Paddle Configuration

@@ -2,6 +2,8 @@
 
 #include "GameEngine.h"
 
+EventQueue GameEngine::_gameEventQueue;
+
 GameEngine::GameEngine(const bool capFPS) :
     _capFPS(capFPS)
 {
@@ -55,6 +57,21 @@ void GameEngine::Run()
     }
 }
 
+void GameEngine::AddEvent(const Event& event)
+{
+    _gameEventQueue.AddEvent(event);
+}
+
+void GameEngine::RegisterListener(const std::string& eventType, const EventHandler& handler)
+{
+    _gameEventQueue.RegisterListener(eventType, handler);
+}
+
+void GameEngine::UnregisterListener(const std::string& eventType, const EventHandler& handler)
+{
+    _gameEventQueue.UnregisterListener(eventType, handler);
+}
+
 void GameEngine::HandleEvents()
 {
     SDL_Event event;
@@ -81,6 +98,9 @@ void GameEngine::Update()
     // get a delta time factor converted to seconds to be used to update objects
     const auto deltaTime = (SDL_GetTicks() - _lastFrameTime) / 1000.0f;
     _lastFrameTime = SDL_GetTicks();
+
+    //Process event queue
+    _gameEventQueue.ProcessEvents();
 
     // Update game objects here
     _gameObjectManager.Update(deltaTime);

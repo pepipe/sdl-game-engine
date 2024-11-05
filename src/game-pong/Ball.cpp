@@ -2,6 +2,9 @@
 
 #include <physics/Collision2D.h>
 
+#include "EventTypes.h"
+#include "GameEngine.h"
+
 Ball::Ball(const float xPos, const float yPos, const float size, const float speedX, const float speedY, const int screenWidth,
            const int screenHeight) :
     GameObject2D(size, size, Vector2D(xPos, yPos)),
@@ -13,6 +16,7 @@ Ball::Ball(const float xPos, const float yPos, const float size, const float spe
 
 void Ball::FlipHorizontalMovement()
 {
+    GameEngine::AddEvent(Event(EVENT_BALL_BOUNCE));
     _speed.x = -_speed.x;
 }
 
@@ -53,10 +57,12 @@ void Ball::Update(const float deltaTime)
     {
         _speed.y = -_speed.y;
         _position.y = 0;
+        GameEngine::AddEvent(Event(EVENT_BALL_BOUNCE));
     }else if(_position.y > _screenHeight - GetSize())
     {
         _speed.y = -_speed.y;
         _position.y = _screenHeight - GetSize();
+        GameEngine::AddEvent(Event(EVENT_BALL_BOUNCE));
     }
 }
 

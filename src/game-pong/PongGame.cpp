@@ -6,6 +6,7 @@
 #include "Ball.h"
 #include "Paddle.h"
 #include "Collision2D.h"
+#include "EventTypes.h"
 
 bool PongGame::Init(const char* title, const int width, const int height)
 {
@@ -32,6 +33,9 @@ bool PongGame::Init(const char* title, const int width, const int height)
     _audio.LoadSound(AUDIO_HIT, "assets/audio/hit.wav");
     _audio.LoadSound(AUDIO_SCORE, "assets/audio/score.wav");
 
+    RegisterListener(EVENT_BALL_BOUNCE,
+        [this](const Event& event) { this->OnBallBounce(event); });
+    
     return true;
 }
 
@@ -137,4 +141,9 @@ void PongGame::BallCheckHorizontalExit()
     std::cout << "Player 1 Score: " << _scorePlayer1.GetScore() << std::endl;
     std::cout << "Player 2 Score: " << _scorePlayer2.GetScore() << std::endl;
     SpawnBall();
+}
+
+void PongGame::OnBallBounce(const Event& event)
+{
+    _audio.PlaySound(AUDIO_HIT);
 }

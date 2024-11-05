@@ -38,6 +38,13 @@ bool GameEngine::Init(const char* title, const int width, const int height)
     return true;
 }
 
+bool GameEngine::InitAudio(const SDL_AudioDeviceID deviceId, const SDL_AudioSpec& desiredSpec)
+{
+    _audioInit = _audio.Init(deviceId, &desiredSpec);
+    return _audioInit;
+}
+
+
 void GameEngine::Run()
 {
     while (_isRunning)
@@ -90,8 +97,9 @@ void GameEngine::Render()
     SDL_RenderPresent(_renderer);
 }
 
-void GameEngine::Clean() const
+void GameEngine::Clean()
 {
+    if(_audioInit) _audio.Clean();
     SDL_DestroyRenderer(_renderer);
     SDL_DestroyWindow(_window);
     SDL_Quit();

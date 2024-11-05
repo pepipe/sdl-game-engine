@@ -11,6 +11,14 @@ bool PongGame::Init(const char* title, const int width, const int height)
 {
     if (!GameEngine::Init(title, width, height)) return false;
 
+     constexpr SDL_AudioDeviceID deviceId = 0; // Use default device ID
+     SDL_AudioSpec desiredSpec;
+     desiredSpec.freq = 44100;       // Standard audio frequency
+     desiredSpec.format = SDL_AUDIO_S16; // Standard audio format
+     desiredSpec.channels = 2;       // Stereo
+
+    if(!InitAudio(deviceId, desiredSpec)) return false;
+
     // Create paddles and ball
     // Calculate positions based on screen dimensions
     _player1 = std::make_shared<Paddle>(width * 0.05f, height / 2.0f - PADDLE_HEIGHT / 2, PADDLE_WIDTH, PADDLE_HEIGHT, PADDLE_SPEED, false, height);
@@ -20,6 +28,9 @@ bool PongGame::Init(const char* title, const int width, const int height)
     _gameObjectManager.AddObject(_player2);
 
     SpawnBall();
+
+    _audio.LoadSound(AUDIO_HIT, "assets/audio/hit.wav");
+    _audio.LoadSound(AUDIO_SCORE, "assets/audio/score.wav");
 
     return true;
 }
@@ -115,10 +126,12 @@ void PongGame::BallCheckHorizontalExit()
     if (_ball->GetPosition().x <= 0)
     {
         _scorePlayer2.IncreaseScore();
+        _audio.PlaySound(AUDIO_SCORE);
     }
     else if (_ball->GetPosition().x >= _screenWidth)
     {
         _scorePlayer1.IncreaseScore();
+        _audio.PlaySound(AUDIO_SCORE);
     }
 
     std::cout << "Player 1 Score: " << _scorePlayer1.GetScore() << std::endl;

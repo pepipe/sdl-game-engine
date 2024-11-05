@@ -1,11 +1,6 @@
 ﻿#include "Audio.h"
 
-Audio::~Audio()
-{
-    CleanUp();
-}
-
-bool Audio::InitializeAudio(const SDL_AudioDeviceID deviceId, const SDL_AudioSpec* desiredSpec)
+bool Audio::Init(const SDL_AudioDeviceID deviceId, const SDL_AudioSpec* desiredSpec)
 {
     if (Mix_OpenAudio(deviceId, desiredSpec) == false)
     {
@@ -34,10 +29,13 @@ void Audio::PlaySound(const std::string& name, const int loops)
     }
 }
 
-void Audio::CleanUp() {
-    for (const auto& sound : _sounds) {
+void Audio::Clean()
+{
+    for (auto sound : _sounds)
+    {
         Mix_FreeChunk(sound.second);
     }
     _sounds.clear();
     Mix_CloseAudio();
+    Mix_Quit();
 }

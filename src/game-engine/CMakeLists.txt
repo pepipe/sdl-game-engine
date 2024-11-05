@@ -6,6 +6,7 @@ add_library(GameEngine STATIC ${GAME_ENGINE_SRC})
 # include directories for GameEngine
 target_include_directories(GameEngine PUBLIC 
         ${CMAKE_CURRENT_SOURCE_DIR}
+        ${CMAKE_CURRENT_SOURCE_DIR}/audio
         ${CMAKE_CURRENT_SOURCE_DIR}/math
         ${CMAKE_CURRENT_SOURCE_DIR}/objects
         ${CMAKE_CURRENT_SOURCE_DIR}/physics

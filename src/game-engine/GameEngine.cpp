@@ -126,6 +126,7 @@ void GameEngine::Render()
 void GameEngine::Clean()
 {
     if(_audioInit) _audio.Clean();
+    if(_textInit) _text.Clean();
     SDL_DestroyRenderer(_renderer);
     SDL_DestroyWindow(_window);
     SDL_Quit();

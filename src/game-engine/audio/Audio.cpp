@@ -31,7 +31,7 @@ void Audio::PlaySound(const std::string& name, const int loops)
 
 void Audio::Clean()
 {
-    for (auto sound : _sounds)
+    for (const auto sound : _sounds)
     {
         Mix_FreeChunk(sound.second);
     }

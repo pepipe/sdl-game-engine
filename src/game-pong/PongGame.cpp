@@ -8,6 +8,15 @@
 #include "Collision2D.h"
 #include "EventTypes.h"
 
+PongGame::PongGame() :
+    _scoreTextWidthPlayer1(0.0f),
+    _scoreTextHeightPlayer1(0.0f),
+    _scoreTextWidthPlayer2(0.0f),
+    _scoreTextHeightPlayer2(0.0f)
+{
+}
+
+
 bool PongGame::Init(const char* title, const int width, const int height)
 {
     if (!GameEngine::Init(title, width, height)) return false;
@@ -19,6 +28,9 @@ bool PongGame::Init(const char* title, const int width, const int height)
      desiredSpec.channels = 2;       // Stereo
 
     if(!InitAudio(deviceId, desiredSpec)) return false;
+    if(!InitText()) return false;
+
+    LoadAssets();
 
     // Create paddles and ball
     // Calculate positions based on screen dimensions
@@ -29,9 +41,7 @@ bool PongGame::Init(const char* title, const int width, const int height)
     _gameObjectManager.AddObject(_player2);
 
     SpawnBall();
-
-    _audio.LoadSound(AUDIO_HIT, "assets/audio/hit.wav");
-    _audio.LoadSound(AUDIO_SCORE, "assets/audio/score.wav");
+    UpdateScoreTextures(_renderer);
 
     RegisterListener(EVENT_BALL_BOUNCE,
         [this](const Event& event) { this->OnBallBounce(event); });
@@ -64,25 +74,47 @@ void PongGame::Render()
 {
     SDL_SetRenderDrawColor(_renderer, 0, 0, 0, 255);
     SDL_RenderClear(_renderer);
-
+    
     DrawNet(_renderer);
+    DrawScore(_renderer);
     _gameObjectManager.Render(_renderer);
 
     SDL_RenderPresent(_renderer);
 }
 
+void PongGame::LoadAssets()
+{
+    //Audio
+    _audio.LoadSound(AUDIO_HIT, "assets/audio/hit.wav");
+    _audio.LoadSound(AUDIO_SCORE, "assets/audio/score.wav");
+    //Fonts
+    _text.LoadFont(FONT_SCORE, "assets/fonts/DS-DIGIT.ttf", 100.0f);
+    
+}
+
+void PongGame::UpdateScoreTextures(SDL_Renderer* renderer)
+{
+    if (_scoreTexturePlayer1) SDL_DestroyTexture(_scoreTexturePlayer1);
+    if (_scoreTexturePlayer2) SDL_DestroyTexture(_scoreTexturePlayer2);
+
+    constexpr SDL_Color color = {255, 255, 255};
+    _scoreTexturePlayer1 = _text.CreateTextSurface(FONT_SCORE, std::to_string(_scorePlayer1.GetScore()), color, renderer);
+    _scoreTexturePlayer2 = _text.CreateTextSurface(FONT_SCORE, std::to_string(_scorePlayer2.GetScore()), color, renderer);
+    _scoreTextWidthPlayer1 = static_cast<float>(_scoreTexturePlayer1->w);
+    _scoreTextHeightPlayer1 = static_cast<float>(_scoreTexturePlayer1->h);
+    _scoreTextWidthPlayer2 = static_cast<float>(_scoreTexturePlayer2->w);
+    _scoreTextHeightPlayer2 = static_cast<float>(_scoreTexturePlayer2->h);
+}
+
 void PongGame::DrawNet(SDL_Renderer* renderer) const
 {
-    int screenWidth, screenHeight;
-    SDL_GetCurrentRenderOutputSize(renderer, &screenWidth, &screenHeight);
-
-    // Set color for the net (e.g., white)
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 
     // Draw the net
-    for (int y = 0; y < screenHeight; y += NET_HEIGHT + NET_SPACING) {
+    for (int y = 0; y < _screenHeight; y += NET_HEIGHT + NET_SPACING)
+    {
         SDL_FRect netRect = {
-            screenWidth / 2.0f - NET_WIDTH / 2.0f,
+            _screenWidth / 2.0f - NET_WIDTH / 2.0f,
             static_cast<float>(y),
             static_cast<float>(NET_WIDTH),
             static_cast<float>(NET_HEIGHT)
@@ -90,6 +122,20 @@ void PongGame::DrawNet(SDL_Renderer* renderer) const
         SDL_RenderFillRect(renderer, &netRect);
     }
 }
+
+void PongGame::DrawScore(SDL_Renderer* renderer) const
+{
+    const SDL_FRect dstRectPlayer1 = {50.0f, 50.0f, _scoreTextWidthPlayer1, _scoreTextHeightPlayer1};
+    const SDL_FRect dstRectPlayer2 = {_screenWidth - 100.0f, 50.0f, _scoreTextWidthPlayer2, _scoreTextHeightPlayer2};
+    
+    if (_scoreTexturePlayer1 != nullptr) {
+        _text.RenderText(renderer, _scoreTexturePlayer1, nullptr, &dstRectPlayer1);
+    }
+    if (_scoreTexturePlayer2 != nullptr) {
+        _text.RenderText(renderer, _scoreTexturePlayer2, nullptr, &dstRectPlayer2);
+    }
+}
+
 
 void PongGame::SpawnBall()
 {
@@ -140,6 +186,7 @@ void PongGame::BallCheckHorizontalExit()
     std::cout << "Player 1 Score: " << _scorePlayer1.GetScore() << std::endl;
     std::cout << "Player 2 Score: " << _scorePlayer2.GetScore() << std::endl;
     SpawnBall();
+    UpdateScoreTextures(_renderer);
 }
 
 void PongGame::OnBallBounce(const Event& event)

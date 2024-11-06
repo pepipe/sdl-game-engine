@@ -9,12 +9,16 @@
 class PongGame final : public GameEngine
 {
 public:
+    PongGame();
     bool Init(const char* title, int width, int height) override;
     void Update() override;
     void Render() override;
 
 private:
+    void LoadAssets();
+    void UpdateScoreTextures(SDL_Renderer* renderer);
     void DrawNet(SDL_Renderer* renderer) const;
+    void DrawScore(SDL_Renderer* renderer) const;
     void SpawnBall();
     void HandleBallPaddleCollision(const Vector2D& newPos);
     void BallCheckHorizontalExit();
@@ -36,14 +40,22 @@ private:
     const int NET_HEIGHT = 30; // Height of each rectangle in the net
     const int NET_SPACING = 20; // Space between each rectangle in the net
     // Audio
-    const char* AUDIO_HIT = "hit";
-    const char* AUDIO_SCORE = "score";
+    const char* AUDIO_HIT = "audioHit";
+    const char* AUDIO_SCORE = "audioScore";
+    // Font
+    const char* FONT_SCORE = "fontScore"; 
 
-    std::shared_ptr<Paddle> _player1;
-    std::shared_ptr<Paddle> _player2;
-    std::shared_ptr<Ball> _ball;
     Score _scorePlayer1;
     Score _scorePlayer2;
-    Mix_Chunk* _audioHit;
-    Mix_Chunk* _audioScore;
+    std::shared_ptr<Paddle> _player1 = nullptr;
+    std::shared_ptr<Paddle> _player2 = nullptr;
+    std::shared_ptr<Ball> _ball = nullptr;
+    Mix_Chunk* _audioHit = nullptr;
+    Mix_Chunk* _audioScore = nullptr;
+    SDL_Texture* _scoreTexturePlayer1 = nullptr;
+    SDL_Texture* _scoreTexturePlayer2 = nullptr;
+    float _scoreTextWidthPlayer1;
+    float _scoreTextHeightPlayer1;
+    float _scoreTextWidthPlayer2;
+    float _scoreTextHeightPlayer2;
 };

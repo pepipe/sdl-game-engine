@@ -7,6 +7,7 @@ bool Audio::Init(const SDL_AudioDeviceID deviceId, const SDL_AudioSpec* desiredS
         SDL_Log("Failed to open audio device: %s", SDL_GetError());
         return false;
     }
+
     return true;
 }
 
@@ -21,12 +22,29 @@ void Audio::LoadSound(const std::string& name, const std::string& path)
     _sounds[name] = sound;
 }
 
-void Audio::PlaySound(const std::string& name, const int loops)
+void Audio::PlaySound(const std::string& name, const int loops, const int volume)
 {
     if (const auto it = _sounds.find(name); it != _sounds.end())
     {
+        Mix_VolumeChunk(it->second, volume);
         Mix_PlayChannel(-1, it->second, loops);
     }
+}
+
+void Audio::LoadMusic(const std::string& path)
+{
+    _music = Mix_LoadMUS(path.c_str());
+}
+
+void Audio::PlayMusic(const int loops, const int volume) const
+{
+    Mix_VolumeMusic(volume);
+    Mix_PlayMusic(_music, loops);
+}
+
+void Audio::SetMasterVolume(const int volume)
+{
+    Mix_MasterVolume(volume);
 }
 
 void Audio::Clean()
@@ -36,6 +54,8 @@ void Audio::Clean()
         Mix_FreeChunk(sound.second);
     }
     _sounds.clear();
+    if(_music != nullptr)
+        Mix_FreeMusic(_music);
     Mix_CloseAudio();
     Mix_Quit();
 }

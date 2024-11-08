@@ -25,7 +25,7 @@ public:
 
     virtual void HandleEvents();
     virtual void Update();
-    virtual void Render();
+    virtual void RenderObjects();
 
 protected:
     virtual void Clean();
@@ -39,6 +39,8 @@ protected:
     Text _text;
 
 private:
+    void Render();
+
     const int FPS = 60;
     const float FRAME_TARGET_TIME = 1000.0f / FPS;
 

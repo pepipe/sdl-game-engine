@@ -124,9 +124,14 @@ void GameEngine::Render()
     SDL_RenderClear(_renderer);
 
     // Draw objects here
-    _gameObjectManager.Render(_renderer);
+    RenderObjects();
 
     SDL_RenderPresent(_renderer);
+}
+
+void GameEngine::RenderObjects()
+{
+    _gameObjectManager.Render(_renderer);
 }
 
 void GameEngine::Clean()

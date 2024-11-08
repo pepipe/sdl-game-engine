@@ -70,16 +70,11 @@ void PongGame::Update()
     BallCheckHorizontalExit();
 }
 
-void PongGame::Render()
+void PongGame::RenderObjects()
 {
-    SDL_SetRenderDrawColor(_renderer, 0, 0, 0, 255);
-    SDL_RenderClear(_renderer);
-    
     DrawNet(_renderer);
     DrawScore(_renderer);
-    _gameObjectManager.Render(_renderer);
-
-    SDL_RenderPresent(_renderer);
+    GameEngine::RenderObjects();
 }
 
 void PongGame::LoadAssets()

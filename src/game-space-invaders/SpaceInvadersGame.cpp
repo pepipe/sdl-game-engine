@@ -23,20 +23,16 @@ void SpaceInvadersGame::Update()
     GameEngine::Update();
 }
 
-void SpaceInvadersGame::Render()
+void SpaceInvadersGame::RenderObjects()
 {
-    SDL_SetRenderDrawColor(_renderer, 0, 0, 0, 255);
-    SDL_RenderClear(_renderer);
-
-    // Draw objects here
+    //Draw image
     SDL_Texture* texture = _image.GetTexture("Player"); // Assume GetTexture loads or retrieves a texture
     float width, height;
     SDL_GetTextureSize (texture, &width, &height);
     const SDL_FRect dstRect = { 50, 50, width, height };
     SDL_RenderTexture(_renderer, texture, nullptr, &dstRect);
-    _gameObjectManager.Render(_renderer);
 
-    SDL_RenderPresent(_renderer);
+    GameEngine::RenderObjects();
 }
 
 

@@ -5,7 +5,7 @@ file(GLOB_RECURSE PONG_SRC "*.cpp" "*.h")
 add_executable (PongGame ${PONG_SRC})
 
 # Link SDL3 Library
-target_link_libraries(PongGame PRIVATE GameEngine SDL3)
+target_link_libraries(PongGame PRIVATE GameEngine)
 
 # Set the subsystem for Windows (only necessary for executables)
 if(MSVC)

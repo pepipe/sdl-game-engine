@@ -1,6 +1,8 @@
 ﻿# Root CMakeLists.txt : CMake project for SDLEngine
 cmake_minimum_required(VERSION 3.8)
 
+include(${CMAKE_SOURCE_DIR}/cmake/common.cmake)
+
 project("SDLEngine")
 
 # Set the C++ standard and compiler flags

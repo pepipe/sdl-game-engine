@@ -2,7 +2,13 @@
 
 bool Text::Init()
 {
-    return TTF_Init();
+    if(TTF_Init() == false)
+    {
+        SDL_Log("Failed to initialize SDL_ttf: %s", SDL_GetError());
+        return false;
+    }
+
+    return true;
 }
 
 bool Text::LoadFont(const std::string& name, const std::string& path, const float size)

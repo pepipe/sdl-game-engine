@@ -1,5 +1,7 @@
 ﻿#include "Audio.h"
 
+#include <ranges>
+
 bool Audio::Init(const SDL_AudioDeviceID deviceId, const SDL_AudioSpec* desiredSpec)
 {
     if (Mix_OpenAudio(deviceId, desiredSpec) == false)
@@ -49,9 +51,9 @@ void Audio::SetMasterVolume(const int volume)
 
 void Audio::Clean()
 {
-    for (const auto sound : _sounds)
+    for (const auto sounds : _sounds | std::views::values)
     {
-        Mix_FreeChunk(sound.second);
+        Mix_FreeChunk(sounds);
     }
     _sounds.clear();
     if(_music != nullptr)

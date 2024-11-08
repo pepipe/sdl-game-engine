@@ -89,7 +89,6 @@ void PongGame::LoadAssets()
     _audio.LoadSound(AUDIO_SCORE, "assets/audio/score.wav");
     //Fonts
     _text.LoadFont(FONT_SCORE, "assets/fonts/DS-DIGIT.ttf", 100.0f);
-    
 }
 
 void PongGame::UpdateScoreTextures(SDL_Renderer* renderer)

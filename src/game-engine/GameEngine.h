@@ -4,6 +4,7 @@
 #include "GameObjectManager.h"
 #include "Audio.h"
 #include "EventQueue.h"
+#include "Image.h"
 #include "text/Text.h"
 
 class GameEngine {
@@ -13,6 +14,7 @@ public:
 
     virtual bool Init(const char* title, int width, int height);
     bool InitAudio(SDL_AudioDeviceID deviceId, const SDL_AudioSpec& desiredSpec);
+    bool InitImage();
     bool InitText();
     void Run();
 
@@ -33,6 +35,7 @@ protected:
     int _screenWidth;
     int _screenHeight;
     Audio _audio;
+    Image _image;
     Text _text;
 
 private:
@@ -44,6 +47,7 @@ private:
     SDL_Window* _window = nullptr;
     Uint64 _lastFrameTime = 0;
     bool _audioInit = false;
+    bool _imageInit = false;
     bool _textInit = false;
     static EventQueue _gameEventQueue;
 };

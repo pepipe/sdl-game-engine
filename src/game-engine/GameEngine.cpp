@@ -46,6 +46,12 @@ bool GameEngine::InitAudio(const SDL_AudioDeviceID deviceId, const SDL_AudioSpec
     return _audioInit;
 }
 
+bool GameEngine::InitImage()
+{
+    _imageInit = _image.Init();
+    return _imageInit;
+}
+
 bool GameEngine::InitText()
 {
     _textInit = _text.Init();
@@ -126,6 +132,7 @@ void GameEngine::Render()
 void GameEngine::Clean()
 {
     if(_audioInit) _audio.Clean();
+    if(_imageInit) _image.Clean();
     if(_textInit) _text.Clean();
     SDL_DestroyRenderer(_renderer);
     SDL_DestroyWindow(_window);

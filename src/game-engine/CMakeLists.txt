@@ -7,6 +7,7 @@ add_library(GameEngine STATIC ${GAME_ENGINE_SRC})
 target_include_directories(GameEngine PUBLIC 
         ${CMAKE_CURRENT_SOURCE_DIR}
         ${CMAKE_CURRENT_SOURCE_DIR}/audio
+        ${CMAKE_CURRENT_SOURCE_DIR}/image
         ${CMAKE_CURRENT_SOURCE_DIR}/math
         ${CMAKE_CURRENT_SOURCE_DIR}/objects
         ${CMAKE_CURRENT_SOURCE_DIR}/physics
@@ -15,5 +16,6 @@ target_include_directories(GameEngine PUBLIC
 
 # Link SDL
 target_link_libraries(GameEngine PRIVATE SDL3)
+target_link_libraries(GameEngine PRIVATE SDL3_image)
 target_link_libraries(GameEngine PRIVATE SDL3_mixer)
 target_link_libraries(GameEngine PRIVATE SDL3_ttf)

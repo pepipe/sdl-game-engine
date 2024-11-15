@@ -13,9 +13,9 @@ public:
     Vector2D GetSpeed() const;
     void SetSpeed(const Vector2D& speed);
 
-    void HandleEvents(const SDL_Event& event) override{/* No-op */};
     void Update(float deltaTime) override;
     void Render(SDL_Renderer* renderer) const override;
+
 private:
     Vector2D _speed;
     int _screenWidth;

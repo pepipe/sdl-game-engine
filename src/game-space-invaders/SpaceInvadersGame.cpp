@@ -1,4 +1,5 @@
 #include "SpaceInvadersGame.h"
+#include "SpaceInvadersConfig.h"
 
 namespace SpaceInvaders
 {
@@ -17,9 +18,8 @@ namespace SpaceInvaders
         if (!InitText()) return false;
 
         LoadAssets();
+        CreateEnemies();
 
-        _enemy = std::make_shared<Enemy>(64.0f, 64.0f, Vector2D(100.0f, 100.0f), _spriteSheetManager, "Enemy1", 2, 2.0f);
-        _gameObjectManager.AddObject(_enemy);
         return true;
     }
 
@@ -30,12 +30,12 @@ namespace SpaceInvaders
 
     void SpaceInvadersGame::RenderObjects()
     {
-        //Draw images
-        SDL_Texture* playerTexture = _imageManager.GetTexture("Player"); // Assume GetTexture loads or retrieves a texture
-        float playerWidth, playerHeight;
-        SDL_GetTextureSize(playerTexture, &playerWidth, &playerHeight);
-        const SDL_FRect playerDstRect = {0.f, 0.f, playerWidth, playerHeight};
-        SDL_RenderTexture(_renderer, playerTexture, nullptr, &playerDstRect);
+        // //Draw images
+        // SDL_Texture* playerTexture = _imageManager.GetTexture("Player"); // Assume GetTexture loads or retrieves a texture
+        // float playerWidth, playerHeight;
+        // SDL_GetTextureSize(playerTexture, &playerWidth, &playerHeight);
+        // const SDL_FRect playerDstRect = {0.f, 0.f, playerWidth, playerHeight};
+        // SDL_RenderTexture(_renderer, playerTexture, nullptr, &playerDstRect);
 
         GameEngine::RenderObjects();
     }
@@ -47,7 +47,45 @@ namespace SpaceInvaders
         _imageManager.LoadTexture("Player", "assets/images/player.png", _renderer);
         //SpriteSheets
         _spriteSheetManager.LoadSpriteSheet("Enemy1", "assets/images/enemy-1.png", 64, 64, _renderer);
+        _spriteSheetManager.LoadSpriteSheet("Enemy2", "assets/images/enemy-2.png", 128, 64, _renderer);
+        _spriteSheetManager.LoadSpriteSheet("Enemy3", "assets/images/enemy-3.png", 128, 64, _renderer);
         //Audio
         //Fonts
     }
+
+    void SpaceInvadersGame::CreateEnemies()
+    {
+        for (int i = 0; i < 5; ++i)
+        {
+            auto enemySpriteName = GetEnemyName(i);
+            auto enemyWidth = GetEnemyWidth(i);
+            const auto horizontalSpacing = i == 0 ? SMALL_ENEMY_HORIZONTAL_SPACING : LARGE_ENEMY_HORIZONTAL_SPACING;
+            float enemyHeight = 64.0f;
+            for (int j = 0; j < 10; ++j)
+            {
+                auto enemyPos = Vector2D(0 + j * (enemyWidth + horizontalSpacing), 0 + i * (enemyHeight + ENEMY_VERTICAL_SPACING));
+                
+                auto enemy = std::make_shared<Enemy>(enemyWidth, enemyHeight, enemyPos, _spriteSheetManager,
+                                                            enemySpriteName, 2, 2.0f);
+                _gameObjectManager.AddObject(enemy);
+                _enemyLines[i][j] = enemy;
+            }
+        }
+    }
+
+    std::string SpaceInvadersGame::GetEnemyName(const int line)
+    {
+        if(line == 0) return "Enemy1";
+        if(line > 0 && line < 3) return "Enemy2";
+
+        return "Enemy3";
+    }
+
+    float SpaceInvadersGame::GetEnemyWidth(const int line)
+    {
+        if(line == 0) return 64.0f;
+
+        return 128.0f;
+    }
+
 }

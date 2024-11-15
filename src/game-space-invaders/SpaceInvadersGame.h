@@ -14,7 +14,10 @@ namespace SpaceInvaders
 
     private:
         void LoadAssets();
+        void CreateEnemies();
+        static std::string GetEnemyName(int line);
+        static float GetEnemyWidth(int line);
 
-        std::shared_ptr<Enemy> _enemy = nullptr;
+        std::shared_ptr<Enemy> _enemyLines[5][12];
     };
 }

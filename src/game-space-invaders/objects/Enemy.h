@@ -23,5 +23,6 @@ namespace SpaceInvaders
     private:
         SpriteSheet& _spriteSheet;
         SpriteAnimation _spriteAnimation;
+        float _timeAccumulator = 0.0f;
     };
 }

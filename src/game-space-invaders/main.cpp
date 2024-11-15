@@ -7,7 +7,7 @@
 int main(int argc, char* argv[])
 {
     SpaceInvaders::SpaceInvadersGame game;
-    if (!game.Init("Space Invaders", 1600, 900))
+    if (!game.Init("Space Invaders", 1920, 1080))
     {
         return -1;
     }

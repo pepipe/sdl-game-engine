@@ -2,7 +2,7 @@
 
 #include "GameObject.h"
 
-namespace GameEngine::Object
+namespace GameEngine::Objects
 {
     class GameObject3D : public GameObject
     {

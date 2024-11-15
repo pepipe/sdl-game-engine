@@ -1,6 +1,6 @@
 #include "GameObjectManager.h"
 
-namespace GameEngine::Object
+namespace GameEngine::Objects
 {
     void GameObjectManager::AddObject(std::shared_ptr<GameObject> obj)
     {

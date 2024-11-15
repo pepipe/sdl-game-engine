@@ -1,6 +1,6 @@
 #include "SpriteAnimation.h"
 
-namespace GameEngine::Image
+namespace GameEngine::Images
 {
     SpriteAnimation::SpriteAnimation(const std::string& spriteName, const int totalFrames, const float framesPerSecond) :
         _imageName(spriteName),

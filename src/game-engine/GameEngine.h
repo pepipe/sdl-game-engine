@@ -1,18 +1,20 @@
 #pragma once
-#include <SDL3/SDL.h>
 
+#include <SDL3/SDL.h>
 #include "Audio.h"
 #include "EventQueue.h"
-#include "Image.h"
+#include "Images.h"
 #include "SpriteSheet.h"
-#include "object/GameObjectManager.h"
-#include "text/Text.h"
+#include "GameObjectManager.h"
+#include "Texts.h"
 
-using GameEngine::Object::GameObjectManager;
+using GameEngine::Objects::GameObjectManager;
 using GameEngine::Utilities::Event;
 using GameEngine::Utilities::EventQueue;
 using GameEngine::Utilities::EventHandler;
-using GameEngine::Image::SpriteSheet;
+using GameEngine::Images::Image;
+using GameEngine::Images::SpriteSheet;
+using GameEngine::Texts::Text;
 
 namespace GameEngine
 {
@@ -45,9 +47,9 @@ namespace GameEngine
         int _screenWidth;
         int _screenHeight;
         Audio::Audio _audioManager;
-        Image::Image _imageManager;
+        Image _imageManager;
         SpriteSheet _spriteSheetManager;
-        Text::Text _textManager;
+        Text _textManager;
 
     private:
         void Render();

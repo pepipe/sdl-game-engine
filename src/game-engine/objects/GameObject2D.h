@@ -6,7 +6,7 @@
 
 using GameEngine::Math::Vector2D;
 
-namespace GameEngine::Object
+namespace GameEngine::Objects
 {
     class GameObject2D : public GameObject
     {

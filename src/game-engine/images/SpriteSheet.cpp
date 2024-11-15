@@ -3,7 +3,7 @@
 #include <ranges>
 #include <SDL3_image/SDL_image.h>
 
-namespace GameEngine::Image
+namespace GameEngine::Images
 {
     bool SpriteSheet::Init()
     {

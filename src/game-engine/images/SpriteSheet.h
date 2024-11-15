@@ -4,7 +4,7 @@
 #include <unordered_map>
 #include <SDL3/SDL.h>
 
-namespace GameEngine::Image
+namespace GameEngine::Images
 {
     struct SpriteFrame
     {

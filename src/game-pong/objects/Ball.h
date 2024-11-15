@@ -1,9 +1,9 @@
 #pragma once
 
 #include "EventQueue.h"
-#include "object/GameObject2D.h"
+#include "objects/GameObject2D.h"
 
-using GameEngine::Object::GameObject2D;
+using GameEngine::Objects::GameObject2D;
 using GameEngine::Math::Vector2D;
 using GameEngine::Utilities::Event;
 using GameEngine::Utilities::EventQueue;

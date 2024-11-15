@@ -5,7 +5,7 @@
 #include <string>
 #include <unordered_map>
 
-namespace GameEngine::Text
+namespace GameEngine::Texts
 {
     class Text
     {

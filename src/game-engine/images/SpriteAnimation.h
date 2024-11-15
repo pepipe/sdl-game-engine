@@ -2,7 +2,7 @@
 
 #include <string>
 
-namespace GameEngine::Image
+namespace GameEngine::Images
 {
     class SpriteAnimation
     {

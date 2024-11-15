@@ -2,7 +2,7 @@
 
 #include <SDL3/SDL_render.h>
 
-namespace GameEngine::Object
+namespace GameEngine::Objects
 {
     class GameObject
     {

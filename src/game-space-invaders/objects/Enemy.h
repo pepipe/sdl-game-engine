@@ -2,12 +2,12 @@
 
 #include "SpriteAnimation.h"
 #include "SpriteSheet.h"
-#include "object/GameObject2D.h"
+#include "GameObject2D.h"
 
-using GameEngine::Object::GameObject2D;
+using GameEngine::Objects::GameObject2D;
 using GameEngine::Math::Vector2D;
-using GameEngine::Image::SpriteSheet;
-using GameEngine::Image::SpriteAnimation;
+using GameEngine::Images::SpriteSheet;
+using GameEngine::Images::SpriteAnimation;
 
 namespace SpaceInvaders
 {

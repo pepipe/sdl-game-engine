@@ -1,9 +1,9 @@
-#include "Image.h"
+#include "Images.h"
 
 #include <ranges>
 #include <SDL3_image/SDL_image.h>
 
-namespace GameEngine::Image
+namespace GameEngine::Images
 {
     bool Image::Init()
     {

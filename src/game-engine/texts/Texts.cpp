@@ -1,8 +1,8 @@
-#include "Text.h"
+#include "Texts.h"
 
 #include <ranges>
 
-namespace GameEngine::Text
+namespace GameEngine::Texts
 {
     bool Text::Init()
     {

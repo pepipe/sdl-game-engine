@@ -1,9 +1,9 @@
 #pragma once
 
 #include <SDL3/SDL_render.h>
-#include "object/GameObject2D.h"
+#include "objects/GameObject2D.h"
 
-using GameEngine::Object::GameObject2D;
+using GameEngine::Objects::GameObject2D;
 using GameEngine::Math::Vector2D;
 
 namespace Pong

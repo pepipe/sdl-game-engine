@@ -4,7 +4,7 @@
 #include <vector>
 #include "GameObject.h"
 
-namespace GameEngine::Object
+namespace GameEngine::Objects
 {
     class GameObjectManager
     {

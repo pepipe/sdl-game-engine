@@ -1,21 +1,24 @@
 #include "Score.h"
 
-int Score::GetScore() const
+namespace Pong
 {
-    return _score;
-}
+    int Score::GetScore() const
+    {
+        return _score;
+    }
 
-void Score::IncreaseScore()
-{
-    _score++; 
-}
+    void Score::IncreaseScore()
+    {
+        _score++; 
+    }
 
-void Score::IncreaseScore(const int amount)
-{
-    _score += amount; 
-}
+    void Score::IncreaseScore(const int amount)
+    {
+        _score += amount; 
+    }
 
-void Score::ResetScore()
-{
-    _score = 0;
+    void Score::ResetScore()
+    {
+        _score = 0;
+    }
 }

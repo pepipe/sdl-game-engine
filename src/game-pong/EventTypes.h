@@ -2,4 +2,7 @@
 
 #include <string>
 
-const std::string EVENT_BALL_BOUNCE = "BallBounce";
+namespace Pong
+{
+    const std::string EVENT_BALL_BOUNCE = "BallBounce";
+}

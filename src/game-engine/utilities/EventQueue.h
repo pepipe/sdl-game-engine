@@ -1,3 +1,5 @@
+#pragma once
+
 #include <string>
 #include <unordered_map>
 #include <functional>
@@ -5,56 +7,59 @@
 #include <iostream>
 #include <variant>
 
-struct Event
+namespace GameEngine::Utilities
 {
-    std::string type;
-    std::unordered_map<std::string, std::variant<int, float, std::string>> data;
-
-    explicit Event(const std::string& eventType) : type(eventType) {}
-};
-
-using EventHandler = std::function<void(const Event&)>;
-
-class EventQueue
-{
-public:
-    void AddEvent(const Event& event)
+    struct Event
     {
-        _events.push(event);
-    }
+        std::string type;
+        std::unordered_map<std::string, std::variant<int, float, std::string>> data;
 
-    void RegisterListener(const std::string& eventType, const EventHandler& handler)
-    {
-        _listeners[eventType].push_back(handler);
-    }
+        explicit Event(const std::string& eventType) : type(eventType) {}
+    };
 
-    void UnregisterListener(const std::string& eventType, const EventHandler& handler)
+    using EventHandler = std::function<void(const Event&)>;
+
+    class EventQueue
     {
-        auto& listeners = _listeners[eventType];
-        std::erase_if(listeners,
-                      [&handler](const EventHandler& registeredHandler) {
-                          return registeredHandler.target<void()>() == handler.target<void>();
-                      });
-    }
-    
-    void ProcessEvents()
-    {
-        while (!_events.empty())
+    public:
+        void AddEvent(const Event& event)
         {
-            Event event = _events.front();
-            _events.pop();
+            _events.push(event);
+        }
 
-            if (auto it = _listeners.find(event.type); it != _listeners.end())
+        void RegisterListener(const std::string& eventType, const EventHandler& handler)
+        {
+            _listeners[eventType].push_back(handler);
+        }
+
+        void UnregisterListener(const std::string& eventType, const EventHandler& handler)
+        {
+            auto& listeners = _listeners[eventType];
+            std::erase_if(listeners,
+                          [&handler](const EventHandler& registeredHandler) {
+                              return registeredHandler.target<void()>() == handler.target<void>();
+                          });
+        }
+    
+        void ProcessEvents()
+        {
+            while (!_events.empty())
             {
-                for (const auto& handler : it->second)
+                Event event = _events.front();
+                _events.pop();
+
+                if (auto it = _listeners.find(event.type); it != _listeners.end())
                 {
-                    handler(event);
+                    for (const auto& handler : it->second)
+                    {
+                        handler(event);
+                    }
                 }
             }
         }
-    }
 
-private:
-    std::queue<Event> _events;
-    std::unordered_map<std::string, std::vector<EventHandler>> _listeners;
-};
+    private:
+        std::queue<Event> _events;
+        std::unordered_map<std::string, std::vector<EventHandler>> _listeners;
+    };
+}

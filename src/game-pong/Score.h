@@ -1,13 +1,16 @@
 #pragma once
 
-class Score
+namespace Pong
 {
-public:
-    int GetScore() const;
-    void IncreaseScore();
-    void IncreaseScore(int amount);
-    void ResetScore();
+    class Score
+    {
+    public:
+        int GetScore() const;
+        void IncreaseScore();
+        void IncreaseScore(int amount);
+        void ResetScore();
 
-private:
-    int _score = 0;
-};
+    private:
+        int _score = 0;
+    };
+}

@@ -1,58 +1,67 @@
 #pragma once
 #include <SDL3/SDL.h>
 
-#include "GameObjectManager.h"
 #include "Audio.h"
 #include "EventQueue.h"
 #include "Image.h"
 #include "SpriteSheet.h"
+#include "object/GameObjectManager.h"
 #include "text/Text.h"
 
-class GameEngine {
-public:
-    explicit GameEngine(bool capFPS = false);
-    ~GameEngine();
+using GameEngine::Object::GameObjectManager;
+using GameEngine::Utilities::Event;
+using GameEngine::Utilities::EventQueue;
+using GameEngine::Utilities::EventHandler;
+using GameEngine::Image::SpriteSheet;
 
-    virtual bool Init(const char* title, int width, int height);
-    bool InitAudio(SDL_AudioDeviceID deviceId, const SDL_AudioSpec& desiredSpec);
-    bool InitImage();
-    bool InitSpriteSheet();
-    bool InitText();
-    void Run();
+namespace GameEngine
+{
+    class GameEngine {
+    public:
+        explicit GameEngine(bool capFPS = false);
+        ~GameEngine();
 
-    //Game Global Events
-    static void AddEvent(const Event& event);
-    static void RegisterListener(const std::string& eventType, const EventHandler& handler);
-    static void UnregisterListener(const std::string& eventType, const EventHandler& handler);
+        virtual bool Init(const char* title, int width, int height);
+        bool InitAudio(SDL_AudioDeviceID deviceId, const SDL_AudioSpec& desiredSpec);
+        bool InitImage();
+        bool InitSpriteSheet();
+        bool InitText();
+        void Run();
 
-    virtual void HandleEvents();
-    virtual void Update();
-    virtual void RenderObjects();
+        //Game Global Events
+        static void AddEvent(const Event& event);
+        static void RegisterListener(const std::string& eventType, const EventHandler& handler);
+        static void UnregisterListener(const std::string& eventType, const EventHandler& handler);
 
-protected:
-    virtual void Clean();
+        virtual void HandleEvents();
+        virtual void Update();
+        virtual void RenderObjects();
 
-    SDL_Renderer* _renderer = nullptr;
-    GameObjectManager _gameObjectManager;
-    int _screenWidth;
-    int _screenHeight;
-    Audio _audioManager;
-    Image _imageManager;
-    SpriteSheet _spriteSheetManager;
-    Text _textManager;
+    protected:
+        virtual void Clean();
 
-private:
-    void Render();
+        SDL_Renderer* _renderer = nullptr;
+        GameObjectManager _gameObjectManager;
+        int _screenWidth;
+        int _screenHeight;
+        Audio::Audio _audioManager;
+        Image::Image _imageManager;
+        SpriteSheet _spriteSheetManager;
+        Text::Text _textManager;
 
-    const int FPS = 60;
-    const float FRAME_TARGET_TIME = 1000.0f / FPS;
+    private:
+        void Render();
 
-    bool _capFPS;
-    bool _isRunning = false;
-    SDL_Window* _window = nullptr;
-    Uint64 _lastFrameTime = 0;
-    bool _audioInit = false;
-    bool _imageInit = false;
-    bool _textInit = false;
-    static EventQueue _gameEventQueue;
-};
+        const int FPS = 60;
+        const float FRAME_TARGET_TIME = 1000.0f / FPS;
+
+        bool _capFPS;
+        bool _isRunning = false;
+        SDL_Window* _window = nullptr;
+        Uint64 _lastFrameTime = 0;
+        bool _audioInit = false;
+        bool _imageInit = false;
+        bool _textInit = false;
+        static EventQueue _gameEventQueue;
+    };
+}

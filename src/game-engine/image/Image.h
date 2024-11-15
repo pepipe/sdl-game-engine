@@ -4,13 +4,16 @@
 #include <unordered_map>
 #include <SDL3/SDL.h>
 
-class Image {
-public:
-    static bool Init();
-    void LoadTexture(const std::string& name, const std::string& path, SDL_Renderer* renderer);
-    SDL_Texture* GetTexture(const std::string& name) const;
-    void Clean();
+namespace GameEngine::Image
+{
+    class Image {
+    public:
+        static bool Init();
+        void LoadTexture(const std::string& name, const std::string& path, SDL_Renderer* renderer);
+        SDL_Texture* GetTexture(const std::string& name) const;
+        void Clean();
 
-protected:
-    std::unordered_map<std::string, SDL_Texture*> _textures;
-};
+    protected:
+        std::unordered_map<std::string, SDL_Texture*> _textures;
+    };
+}

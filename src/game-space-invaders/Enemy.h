@@ -1,19 +1,27 @@
 #pragma once
 
-#include "GameObject2D.h"
-#include "SpriteSheet.h"
 #include "SpriteAnimation.h"
+#include "SpriteSheet.h"
+#include "object/GameObject2D.h"
 
-class Enemy final : public GameObject2D
+using GameEngine::Object::GameObject2D;
+using GameEngine::Math::Vector2D;
+using GameEngine::Image::SpriteSheet;
+using GameEngine::Image::SpriteAnimation;
+
+namespace SpaceInvaders
 {
-public:
-    Enemy(float width, float height, const Vector2D& enemyPos, SpriteSheet& spriteSheet,
-          const std::string& spriteName, int totalFrames, float framesPerSecond);
+    class Enemy final : public GameObject2D
+    {
+    public:
+        Enemy(float width, float height, const Vector2D& enemyPos, SpriteSheet& spriteSheet,
+              const std::string& spriteName, int totalFrames, float framesPerSecond);
 
-    void Update(float deltaTime) override;
-    void Render(SDL_Renderer* renderer) const override;
+        void Update(float deltaTime) override;
+        void Render(SDL_Renderer* renderer) const override;
 
-private:
-    SpriteSheet& _spriteSheet;
-    SpriteAnimation _spriteAnimation;
-};
+    private:
+        SpriteSheet& _spriteSheet;
+        SpriteAnimation _spriteAnimation;
+    };
+}

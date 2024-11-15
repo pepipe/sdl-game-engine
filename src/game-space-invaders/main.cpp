@@ -3,9 +3,10 @@
 #include "GameEngine.h"
 #include "SpaceInvadersGame.h"
 
+
 int main(int argc, char* argv[])
 {
-    SpaceInvadersGame game;
+    SpaceInvaders::SpaceInvadersGame game;
     if (!game.Init("Space Invaders", 1600, 900))
     {
         return -1;

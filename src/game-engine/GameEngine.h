@@ -5,6 +5,7 @@
 #include "Audio.h"
 #include "EventQueue.h"
 #include "Image.h"
+#include "SpriteSheet.h"
 #include "text/Text.h"
 
 class GameEngine {
@@ -15,6 +16,7 @@ public:
     virtual bool Init(const char* title, int width, int height);
     bool InitAudio(SDL_AudioDeviceID deviceId, const SDL_AudioSpec& desiredSpec);
     bool InitImage();
+    bool InitSpriteSheet();
     bool InitText();
     void Run();
 
@@ -34,8 +36,9 @@ protected:
     GameObjectManager _gameObjectManager;
     int _screenWidth;
     int _screenHeight;
-    Audio _audio;
-    Image _image;
+    Audio _audioManager;
+    Image _imageManager;
+    SpriteSheet _spriteSheetManager;
     Text _text;
 
 private:

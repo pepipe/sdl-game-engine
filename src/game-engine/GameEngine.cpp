@@ -42,15 +42,23 @@ bool GameEngine::Init(const char* title, const int width, const int height)
 
 bool GameEngine::InitAudio(const SDL_AudioDeviceID deviceId, const SDL_AudioSpec& desiredSpec)
 {
-    _audioInit = _audio.Init(deviceId, &desiredSpec);
+    _audioInit = _audioManager.Init(deviceId, &desiredSpec);
     return _audioInit;
 }
 
 bool GameEngine::InitImage()
 {
-    _imageInit = _image.Init();
+    _imageInit = _imageManager.Init();
     return _imageInit;
 }
+
+bool GameEngine::InitSpriteSheet()
+{
+    if(_imageInit) return _imageInit;
+    _imageInit = _spriteSheetManager.Init();
+    return _imageInit;
+}
+
 
 bool GameEngine::InitText()
 {
@@ -136,8 +144,8 @@ void GameEngine::RenderObjects()
 
 void GameEngine::Clean()
 {
-    if(_audioInit) _audio.Clean();
-    if(_imageInit) _image.Clean();
+    if(_audioInit) _audioManager.Clean();
+    if(_imageInit) _imageManager.Clean();
     if(_textInit) _text.Clean();
     SDL_DestroyRenderer(_renderer);
     SDL_DestroyWindow(_window);

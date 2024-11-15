@@ -80,8 +80,8 @@ void PongGame::RenderObjects()
 void PongGame::LoadAssets()
 {
     //Audio
-    _audio.LoadSound(AUDIO_HIT, "assets/audio/hit.wav");
-    _audio.LoadSound(AUDIO_SCORE, "assets/audio/score.wav");
+    _audioManager.LoadSound(AUDIO_HIT, "assets/audio/hit.wav");
+    _audioManager.LoadSound(AUDIO_SCORE, "assets/audio/score.wav");
     //Fonts
     _text.LoadFont(FONT_SCORE, "assets/fonts/DS-DIGIT.ttf", 100.0f);
 }
@@ -169,12 +169,12 @@ void PongGame::BallCheckHorizontalExit()
     if (_ball->GetPosition().x <= 0)
     {
         _scorePlayer2.IncreaseScore();
-        _audio.PlaySound(AUDIO_SCORE);
+        _audioManager.PlaySound(AUDIO_SCORE);
     }
     else if (_ball->GetPosition().x >= _screenWidth)
     {
         _scorePlayer1.IncreaseScore();
-        _audio.PlaySound(AUDIO_SCORE);
+        _audioManager.PlaySound(AUDIO_SCORE);
     }
 
     std::cout << "Player 1 Score: " << _scorePlayer1.GetScore() << std::endl;
@@ -185,5 +185,5 @@ void PongGame::BallCheckHorizontalExit()
 
 void PongGame::OnBallBounce(const Event& event)
 {
-    _audio.PlaySound(AUDIO_HIT);
+    _audioManager.PlaySound(AUDIO_HIT);
 }

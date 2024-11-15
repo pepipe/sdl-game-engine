@@ -1,7 +1,7 @@
 #pragma once
 
+#include "Enemy.h"
 #include "GameEngine.h"
-#include "SpriteAnimation.h"
 
 class SpaceInvadersGame : public GameEngine
 {
@@ -13,5 +13,5 @@ public:
 private:
     void LoadAssets();
 
-    std::shared_ptr<SpriteAnimation> _enemy = nullptr;
+    std::shared_ptr<Enemy> _enemy = nullptr;
 };

@@ -15,6 +15,8 @@ bool SpaceInvadersGame::Init(const char* title, const int width, const int heigh
     if (!InitText()) return false;
 
     LoadAssets();
+
+    _enemy = std::make_shared<Enemy>(64.0f, 64.0f, Vector2D(100.0f, 100.0f), _spriteSheetManager, "Enemy1", 2, 2.0f);
     _gameObjectManager.AddObject(_enemy);
     return true;
 }
@@ -27,10 +29,10 @@ void SpaceInvadersGame::Update()
 void SpaceInvadersGame::RenderObjects()
 {
     //Draw images
-    SDL_Texture* playerTexture = _image.GetTexture("Player"); // Assume GetTexture loads or retrieves a texture
+    SDL_Texture* playerTexture = _imageManager.GetTexture("Player"); // Assume GetTexture loads or retrieves a texture
     float playerWidth, playerHeight;
     SDL_GetTextureSize(playerTexture, &playerWidth, &playerHeight);
-    const SDL_FRect playerDstRect = {20.f, 20.f, playerWidth, playerHeight};
+    const SDL_FRect playerDstRect = {0.f, 0.f, playerWidth, playerHeight};
     SDL_RenderTexture(_renderer, playerTexture, nullptr, &playerDstRect);
 
     GameEngine::RenderObjects();
@@ -40,10 +42,9 @@ void SpaceInvadersGame::RenderObjects()
 void SpaceInvadersGame::LoadAssets()
 {
     //Images
-    _image.LoadTexture("Player", "assets/images/player.png", _renderer);
+    _imageManager.LoadTexture("Player", "assets/images/player.png", _renderer);
     //SpriteSheets
-    _enemy = std::make_shared<SpriteAnimation>(64.0f, 64.0f, Vector2D(.0f, .0f), _image, "Enemy1",
-                                               "assets/images/enemy-1.png", _renderer, 2, 1.0f);
+    _spriteSheetManager.LoadSpriteSheet("Enemy1", "assets/images/enemy-1.png", 64, 64, _renderer);
     //Audio
     //Fonts
 }

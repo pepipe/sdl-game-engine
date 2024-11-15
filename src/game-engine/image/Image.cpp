@@ -1,7 +1,6 @@
 #include "Image.h"
 
 #include <ranges>
-#include <SDL3/SDL.h>
 #include <SDL3_image/SDL_image.h>
 
 bool Image::Init()
@@ -42,49 +41,6 @@ SDL_Texture* Image::GetTexture(const std::string& name) const
     return nullptr;
 }
 
-void Image::LoadSpriteSheet(const std::string& name, const std::string& path, const int spriteWidth,
-                                  const int spriteHeight, SDL_Renderer* renderer)
-{
-    SDL_Surface* surface = IMG_Load(path.c_str());
-    if (!surface)
-    {
-        SDL_Log("Failed to load sprite sheet %s: %s", path.c_str(), SDL_GetError());
-        return;
-    }
-
-    SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
-    SDL_DestroySurface(surface);
-    if (!texture)
-    {
-        SDL_Log("Failed to create texture: %s", SDL_GetError());
-        return;
-    }
-    _textures[name] = texture;
-
-    // Split the sprite sheet into frames
-    float sheetWidth, sheetHeight;
-    SDL_GetTextureSize(texture, &sheetWidth, &sheetHeight);
-
-    std::vector<SpriteFrame> frames;
-    for (int y = 0; y < sheetHeight; y += spriteHeight)
-    {
-        for (int x = 0; x < sheetWidth; x += spriteWidth)
-        {
-            frames.push_back({SDL_FRect{static_cast<float>(x), static_cast<float>(y), static_cast<float>(spriteWidth), static_cast<float>(spriteHeight)}});
-        }
-    }
-    _spriteFrames[name] = frames;
-}
-
-const SDL_FRect* Image::GetSprite(const std::string& name, const int frame) const
-{
-    if (const auto it = _spriteFrames.find(name); it != _spriteFrames.end() && frame < it->second.size())
-    {
-        return &it->second[frame].SrcRect;
-    }
-    return nullptr;
-}
-
 
 void Image::Clean()
 {
@@ -93,6 +49,5 @@ void Image::Clean()
         SDL_DestroyTexture(texture);
     }
     _textures.clear();
-    _spriteFrames.clear();
     IMG_Quit();
 }

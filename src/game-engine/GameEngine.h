@@ -39,7 +39,7 @@ protected:
     Audio _audioManager;
     Image _imageManager;
     SpriteSheet _spriteSheetManager;
-    Text _text;
+    Text _textManager;
 
 private:
     void Render();

@@ -83,7 +83,7 @@ void PongGame::LoadAssets()
     _audioManager.LoadSound(AUDIO_HIT, "assets/audio/hit.wav");
     _audioManager.LoadSound(AUDIO_SCORE, "assets/audio/score.wav");
     //Fonts
-    _text.LoadFont(FONT_SCORE, "assets/fonts/DS-DIGIT.ttf", 100.0f);
+    _textManager.LoadFont(FONT_SCORE, "assets/fonts/DS-DIGIT.ttf", 100.0f);
 }
 
 void PongGame::UpdateScoreTextures(SDL_Renderer* renderer)
@@ -92,8 +92,8 @@ void PongGame::UpdateScoreTextures(SDL_Renderer* renderer)
     if (_scoreTexturePlayer2) SDL_DestroyTexture(_scoreTexturePlayer2);
 
     constexpr SDL_Color color = {255, 255, 255};
-    _scoreTexturePlayer1 = _text.CreateTextSurface(FONT_SCORE, std::to_string(_scorePlayer1.GetScore()), color, renderer);
-    _scoreTexturePlayer2 = _text.CreateTextSurface(FONT_SCORE, std::to_string(_scorePlayer2.GetScore()), color, renderer);
+    _scoreTexturePlayer1 = _textManager.CreateTextSurface(FONT_SCORE, std::to_string(_scorePlayer1.GetScore()), color, renderer);
+    _scoreTexturePlayer2 = _textManager.CreateTextSurface(FONT_SCORE, std::to_string(_scorePlayer2.GetScore()), color, renderer);
     _scoreTextWidthPlayer1 = static_cast<float>(_scoreTexturePlayer1->w);
     _scoreTextHeightPlayer1 = static_cast<float>(_scoreTexturePlayer1->h);
     _scoreTextWidthPlayer2 = static_cast<float>(_scoreTexturePlayer2->w);
@@ -123,10 +123,10 @@ void PongGame::DrawScore(SDL_Renderer* renderer) const
     const SDL_FRect dstRectPlayer2 = {_screenWidth - 100.0f, 50.0f, _scoreTextWidthPlayer2, _scoreTextHeightPlayer2};
     
     if (_scoreTexturePlayer1 != nullptr) {
-        _text.RenderText(renderer, _scoreTexturePlayer1, nullptr, &dstRectPlayer1);
+        _textManager.RenderText(renderer, _scoreTexturePlayer1, nullptr, &dstRectPlayer1);
     }
     if (_scoreTexturePlayer2 != nullptr) {
-        _text.RenderText(renderer, _scoreTexturePlayer2, nullptr, &dstRectPlayer2);
+        _textManager.RenderText(renderer, _scoreTexturePlayer2, nullptr, &dstRectPlayer2);
     }
 }
 

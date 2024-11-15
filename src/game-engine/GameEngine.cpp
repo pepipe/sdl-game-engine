@@ -62,7 +62,7 @@ bool GameEngine::InitSpriteSheet()
 
 bool GameEngine::InitText()
 {
-    _textInit = _text.Init();
+    _textInit = _textManager.Init();
     return _textInit;
 }
 
@@ -146,7 +146,8 @@ void GameEngine::Clean()
 {
     if(_audioInit) _audioManager.Clean();
     if(_imageInit) _imageManager.Clean();
-    if(_textInit) _text.Clean();
+    if(_imageInit) _spriteSheetManager.Clean();
+    if(_textInit) _textManager.Clean();
     SDL_DestroyRenderer(_renderer);
     SDL_DestroyWindow(_window);
     SDL_Quit();

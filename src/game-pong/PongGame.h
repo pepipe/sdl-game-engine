@@ -25,27 +25,6 @@ namespace Pong
         void BallCheckHorizontalExit();
         void OnBallBounce(const Event& event);
 
-        // Game Configuration
-        // Paddle Configuration
-        const float PADDLE_WIDTH = 10.0f;
-        const float PADDLE_HEIGHT = 100.0f;
-        const float PADDLE_SPEED = 350.0f;
-        //Ball Configuration
-        const float BALL_MIN_SPEED_X = 250.0f;
-        const float BALL_MAX_SPEED_X = 450.0f;
-        const float BALL_MIN_SPEED_Y = 150.0f;
-        const float BALL_MAX_SPEED_Y = 300.0f;
-        const float BALL_SIZE = 10.0f;
-        // Net configuration
-        const int NET_WIDTH = 7; // Width of each rectangle in the net
-        const int NET_HEIGHT = 30; // Height of each rectangle in the net
-        const int NET_SPACING = 20; // Space between each rectangle in the net
-        // Audio
-        const char* AUDIO_HIT = "audioHit";
-        const char* AUDIO_SCORE = "audioScore";
-        // Font
-        const char* FONT_SCORE = "fontScore"; 
-
         Score _scorePlayer1;
         Score _scorePlayer2;
         std::shared_ptr<Paddle> _player1 = nullptr;

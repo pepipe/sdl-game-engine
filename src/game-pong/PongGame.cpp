@@ -6,6 +6,7 @@
 #include "Paddle.h"
 #include "Collision2D.h"
 #include "EventTypes.h"
+#include "PongConfig.h"
 
 using GameEngine::Physics::Collision2D;
 using GameEngine::Utilities::Random;

@@ -18,6 +18,6 @@ void Enemy::Render(SDL_Renderer* renderer) const
 {
     const auto imageName = _spriteAnimation.GetSpriteName();
     const SDL_FRect* srcRect = _spriteSheet.GetSpriteFRect(imageName, _spriteAnimation.GetCurrentFrame());
-    const SDL_FRect dstRect = {100, 100, srcRect->w, srcRect->h};
+    const SDL_FRect dstRect = {_position.x, _position.y, srcRect->w, srcRect->h};
     SDL_RenderTexture(renderer, _spriteSheet.GetTexture(imageName), srcRect, &dstRect);
 }

@@ -14,6 +14,11 @@ namespace SpaceInvaders
     {
     }
 
+    void Enemy::SetColor(const SDL_Color color)
+    {
+        _spriteColor = color;
+    }
+
     void Enemy::Update(const float deltaTime)
     {
         _timeAccumulator += deltaTime;
@@ -31,10 +36,7 @@ namespace SpaceInvaders
         const auto texture = _spriteSheet.GetTexture(imageName);
         const SDL_FRect* srcRect = _spriteSheet.GetSpriteFRect(imageName, _spriteAnimation.GetCurrentFrame());
         const SDL_FRect dstRect = {_position.x, _position.y, srcRect->w, srcRect->h};
-        SDL_SetTextureColorMod(texture,
-                               GameEngine::Utilities::Colors::Blue.r,
-                               GameEngine::Utilities::Colors::Blue.g,
-                               GameEngine::Utilities::Colors::Blue.b);
+        SDL_SetTextureColorMod(texture, _spriteColor.r, _spriteColor.g, _spriteColor.b);
         SDL_RenderTexture(renderer, texture, srcRect, &dstRect);
     }
 }

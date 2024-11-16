@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Colors.h"
 #include "SpriteAnimation.h"
 #include "SpriteSheet.h"
 #include "GameObject2D.h"
@@ -17,12 +18,14 @@ namespace SpaceInvaders
         Enemy(float width, float height, const Vector2D& enemyPos, SpriteSheet& spriteSheet,
               const std::string& spriteName, int totalFrames, float framesPerSecond);
 
+        void SetColor(SDL_Color color);
         void Update(float deltaTime) override;
         void Render(SDL_Renderer* renderer) const override;
 
     private:
         SpriteSheet& _spriteSheet;
         SpriteAnimation _spriteAnimation;
+        SDL_Color _spriteColor = GameEngine::Utilities::Colors::White;
         float _timeAccumulator = 0.0f;
     };
 }

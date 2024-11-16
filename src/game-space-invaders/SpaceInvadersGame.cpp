@@ -59,14 +59,16 @@ namespace SpaceInvaders
         {
             auto enemySpriteName = GetEnemyName(i);
             auto enemyWidth = GetEnemyWidth(i);
+            const auto enemyColor = GetEnemyColor(i);
             const auto horizontalSpacing = i == 0 ? SMALL_ENEMY_HORIZONTAL_SPACING : LARGE_ENEMY_HORIZONTAL_SPACING;
+            const float leftMargin = i == 0 ? 20.0f : .0f;
             float enemyHeight = 64.0f;
             for (int j = 0; j < 10; ++j)
             {
-                auto enemyPos = Vector2D(0 + j * (enemyWidth + horizontalSpacing), 0 + i * (enemyHeight + ENEMY_VERTICAL_SPACING));
-                
+                auto enemyPos = Vector2D(leftMargin + j * (enemyWidth + horizontalSpacing), 0 + i * (enemyHeight + ENEMY_VERTICAL_SPACING));
                 auto enemy = std::make_shared<Enemy>(enemyWidth, enemyHeight, enemyPos, _spriteSheetManager,
                                                             enemySpriteName, 2, 2.0f);
+                enemy->SetColor(enemyColor);
                 _gameObjectManager.AddObject(enemy);
                 _enemyLines[i][j] = enemy;
             }
@@ -86,6 +88,13 @@ namespace SpaceInvaders
         if(line == 0) return 64.0f;
 
         return 128.0f;
+    }
+
+    SDL_Color SpaceInvadersGame::GetEnemyColor(const int line)
+    {
+        if(line == 0) return ::GameEngine::Utilities::Colors::Magenta;
+        if(line > 0 && line < 3) return ::GameEngine::Utilities::Colors::Yellow;
+        return ::GameEngine::Utilities::Colors::White;
     }
 
 }

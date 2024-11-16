@@ -17,6 +17,7 @@ namespace SpaceInvaders
         void CreateEnemies();
         static std::string GetEnemyName(int line);
         static float GetEnemyWidth(int line);
+        static SDL_Color GetEnemyColor(int line);
 
         std::shared_ptr<Enemy> _enemyLines[5][12];
     };

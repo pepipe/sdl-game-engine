@@ -12,10 +12,11 @@ namespace Pong
     public:
         PongGame();
         bool Init(const char* title, int width, int height) override;
+
+    private:
         void Update() override;
         void RenderObjects() override;
 
-    private:
         void LoadAssets();
         void UpdateScoreTextures(SDL_Renderer* renderer);
         void DrawNet(SDL_Renderer* renderer) const;

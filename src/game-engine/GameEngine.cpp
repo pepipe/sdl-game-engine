@@ -11,6 +11,11 @@ namespace GameEngine
     {
     }
 
+    GameEngine::~GameEngine()
+    {
+        Clean();
+    }
+
     bool GameEngine::Init(const char* title, const int width, const int height)
     {
         if (!SDL_Init(SDL_INIT_VIDEO))
@@ -42,33 +47,6 @@ namespace GameEngine
         return true;
     }
 
-    bool GameEngine::InitAudio(const SDL_AudioDeviceID deviceId, const SDL_AudioSpec& desiredSpec)
-    {
-        _audioInit = _audioManager.Init(deviceId, &desiredSpec);
-        return _audioInit;
-    }
-
-    bool GameEngine::InitImage()
-    {
-        _imageInit = _imageManager.Init();
-        return _imageInit;
-    }
-
-    bool GameEngine::InitSpriteSheet()
-    {
-        if(_imageInit) return _imageInit;
-        _imageInit = _spriteSheetManager.Init();
-        return _imageInit;
-    }
-
-
-    bool GameEngine::InitText()
-    {
-        _textInit = _textManager.Init();
-        return _textInit;
-    }
-
-
     void GameEngine::Run()
     {
         while (_isRunning)
@@ -92,6 +70,31 @@ namespace GameEngine
     void GameEngine::UnregisterListener(const std::string& eventType, const EventHandler& handler)
     {
         _gameEventQueue.UnregisterListener(eventType, handler);
+    }
+
+    bool GameEngine::InitAudio(const SDL_AudioDeviceID deviceId, const SDL_AudioSpec& desiredSpec)
+    {
+        _audioInit = _audioManager.Init(deviceId, &desiredSpec);
+        return _audioInit;
+    }
+
+    bool GameEngine::InitImage()
+    {
+        _imageInit = _imageManager.Init();
+        return _imageInit;
+    }
+
+    bool GameEngine::InitSpriteSheet()
+    {
+        if(_imageInit) return _imageInit;
+        _imageInit = _spriteSheetManager.Init();
+        return _imageInit;
+    }
+
+    bool GameEngine::InitText()
+    {
+        _textInit = _textManager.Init();
+        return _textInit;
     }
 
     void GameEngine::HandleEvents()
@@ -128,17 +131,6 @@ namespace GameEngine
         _gameObjectManager.Update(deltaTime);
     }
 
-    void GameEngine::Render()
-    {
-        SDL_SetRenderDrawColor(_renderer, 0, 0, 0, 255);
-        SDL_RenderClear(_renderer);
-
-        // Draw objects here
-        RenderObjects();
-
-        SDL_RenderPresent(_renderer);
-    }
-
     void GameEngine::RenderObjects()
     {
         _gameObjectManager.Render(_renderer);
@@ -155,8 +147,14 @@ namespace GameEngine
         SDL_Quit();
     }
 
-    GameEngine::~GameEngine()
+    void GameEngine::Render()
     {
-        Clean();
+        SDL_SetRenderDrawColor(_renderer, 0, 0, 0, 255);
+        SDL_RenderClear(_renderer);
+
+        // Draw objects here
+        RenderObjects();
+
+        SDL_RenderPresent(_renderer);
     }
 }

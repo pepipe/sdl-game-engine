@@ -24,10 +24,6 @@ namespace GameEngine
         ~GameEngine();
 
         virtual bool Init(const char* title, int width, int height);
-        bool InitAudio(SDL_AudioDeviceID deviceId, const SDL_AudioSpec& desiredSpec);
-        bool InitImage();
-        bool InitSpriteSheet();
-        bool InitText();
         void Run();
 
         //Game Global Events
@@ -35,11 +31,16 @@ namespace GameEngine
         static void RegisterListener(const std::string& eventType, const EventHandler& handler);
         static void UnregisterListener(const std::string& eventType, const EventHandler& handler);
 
+    protected:
+        bool InitAudio(SDL_AudioDeviceID deviceId, const SDL_AudioSpec& desiredSpec);
+        bool InitImage();
+        bool InitSpriteSheet();
+        bool InitText();
+
         virtual void HandleEvents();
         virtual void Update();
         virtual void RenderObjects();
 
-    protected:
         virtual void Clean();
 
         SDL_Renderer* _renderer = nullptr;

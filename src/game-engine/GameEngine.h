@@ -43,6 +43,8 @@ namespace GameEngine
 
         virtual void Clean();
 
+        static void ClearEventQueue();
+
         SDL_Renderer* _renderer = nullptr;
         GameObjectManager _gameObjectManager;
         int _screenWidth;

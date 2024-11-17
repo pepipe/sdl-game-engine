@@ -63,6 +63,15 @@ namespace GameEngine::Utilities
             }
         }
 
+        void ClearEventQueue()
+        {
+            while (!_events.empty())
+            {
+                _events.pop();
+            }
+            _listeners.clear();
+        }
+
     private:
         std::queue<Event> _events;
         std::unordered_map<std::string, std::vector<EventHandler>> _listeners;

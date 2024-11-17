@@ -70,9 +70,9 @@ namespace SpaceInvaders
         _movement *= -1;
         _position.y += _height;
         _moveWaitTime -= ENEMY_MOVE_WAIT_TIME_REDUCTION;
-        if(_moveWaitTime <= ENEMY_MOVE_WAIT_TIME_REDUCTION)
+        if(_moveWaitTime <= 0.075f)
         {
-            _moveWaitTime = ENEMY_MOVE_WAIT_TIME_REDUCTION;
+            _moveWaitTime = 0.075f;
             return;
         }
         _framesPerSecond += ENEMY_INCREASE_ANIMATION_FPS;

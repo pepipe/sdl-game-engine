@@ -3,6 +3,7 @@
 #include "EventTypes.h"
 #include "SpaceInvadersConfig.h"
 #include "Player.h"
+#include "Colors.h"
 
 namespace SpaceInvaders
 {
@@ -21,17 +22,25 @@ namespace SpaceInvaders
         if (!InitText()) return false;
 
         LoadAssets();
-        CreateEnemies();
-        const auto player = std::make_shared<Player>(PLAYER_WIDTH, PLAYER_HEIGHT, Vector2D(width / 2.0f, height - PLAYER_BOTTOM_MARGIN),
-            PLAYER_SPEED, _imageManager.GetTexture("Player"), width);
-        _gameObjectManager.AddObject(player);
+        StartGame();
 
-        RegisterListener(EVENT_ENEMY_REACH_HORIZONTAL_END,
-            [this](const Event& event) { this->OnHorizontalEnd(event); });
-        RegisterListener(EVENT_ENEMY_REACH_VERTICAL_END,
-                    [this](const Event& event) { this->OnVerticalEnd(event); });
-        
         return true;
+    }
+
+    void SpaceInvadersGame::HandleCustomEvents(const SDL_Event& event)
+    {
+        if(!_isGameOver) return;
+
+        if (event.type == SDL_EVENT_KEY_DOWN)
+        {
+            if (event.key.key == SDLK_RETURN ||
+                event.key.key == SDLK_RETURN2 ||
+                event.key.key == SDLK_KP_ENTER)
+            {
+                ResetGame();
+                StartGame();
+            }
+        }
     }
 
     void SpaceInvadersGame::Update()
@@ -42,6 +51,34 @@ namespace SpaceInvaders
     void SpaceInvadersGame::RenderObjects()
     {
         GameEngine::RenderObjects();
+        if(_isGameOver)
+        {
+            const SDL_FRect dstTextRect = {_screenWidth / 2.0f - 300, _screenHeight / 2.0f - 150, 600.0f, 300.0f};
+            _textManager.RenderText(_renderer, _gameOverText, nullptr, &dstTextRect);
+        }
+    }
+
+    void SpaceInvadersGame::StartGame()
+    {
+        CreateEnemies();
+        const auto player = std::make_shared<Player>(PLAYER_WIDTH, PLAYER_HEIGHT, Vector2D(_screenWidth / 2.0f, _screenHeight - PLAYER_BOTTOM_MARGIN),
+            PLAYER_SPEED, _imageManager.GetTexture("Player"), _screenWidth);
+        _gameObjectManager.AddObject(player);
+
+        RegisterListener(EVENT_ENEMY_REACH_HORIZONTAL_END,
+            [this](const Event& event) { this->OnHorizontalEnd(event); });
+        RegisterListener(EVENT_ENEMY_REACH_VERTICAL_END,
+                    [this](const Event& event) { this->OnVerticalEnd(event); });
+    }
+
+    void SpaceInvadersGame::ResetGame()
+    {
+        ClearEventQueue();
+        _gameObjectManager.ClearObjects();
+        SDL_Delay(100);
+        _isGameOver = false;
+        _lastDirection = 0;
+        SDL_Delay(100);
     }
 
     void SpaceInvadersGame::LoadAssets()
@@ -54,6 +91,7 @@ namespace SpaceInvaders
         _spriteSheetManager.LoadSpriteSheet("Enemy3", "assets/images/enemy-3.png", 128, 64, _renderer);
         //Audio
         //Fonts
+        _textManager.LoadFont("DIGIT-LARGE", "assets/fonts/DS-DIGIT.ttf", 100.0f);
     }
 
     void SpaceInvadersGame::CreateEnemies()
@@ -116,9 +154,10 @@ namespace SpaceInvaders
     void SpaceInvadersGame::OnVerticalEnd(const Event& event)
     {
         if(_isGameOver) return;
-        
-        _isGameOver = true;
+
         AddEvent(Event(EVENT_GAME_OVER));
+        _gameOverText = _textManager.CreateTextSurface("DIGIT-LARGE", "GAME OVER", ::GameEngine::Color::White, _renderer);
+        _isGameOver = true;
     }
 
 }

@@ -135,6 +135,12 @@ namespace GameEngine
         SDL_Quit();
     }
 
+    void GameEngine::ClearEventQueue()
+    {
+        _gameEventQueue.ClearEventQueue();
+    }
+
+
     void GameEngine::HandleEvents()
     {
         SDL_Event event;

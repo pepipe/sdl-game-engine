@@ -5,14 +5,18 @@
 
 namespace SpaceInvaders
 {
-    class SpaceInvadersGame : public GameEngine::GameEngine
+    class SpaceInvadersGame final : public GameEngine::GameEngine
     {
     public:
         bool Init(const char* title, int width, int height) override;
+
+    private:
+        void HandleCustomEvents(const SDL_Event& event) override;
         void Update() override;
         void RenderObjects() override;
 
-    private:
+        void StartGame();
+        void ResetGame();
         void LoadAssets();
         void CreateEnemies();
         static std::string GetEnemyName(int line);
@@ -24,5 +28,6 @@ namespace SpaceInvaders
         std::shared_ptr<Enemy> _enemyLines[5][12];
         int _lastDirection = 0;
         bool _isGameOver = false;
+        SDL_Texture* _gameOverText = nullptr;
     };
 }

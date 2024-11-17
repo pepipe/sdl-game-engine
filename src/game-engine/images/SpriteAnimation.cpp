@@ -29,4 +29,10 @@ namespace GameEngine::Images
     {
         return _imageName;
     }
+
+    void SpriteAnimation::SetFramesPerSecond(const float framesPerSecond)
+    {
+        _frameDuration = 1.0f / framesPerSecond;
+    }
+
 }

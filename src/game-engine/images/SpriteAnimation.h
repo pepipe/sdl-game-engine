@@ -12,6 +12,7 @@ namespace GameEngine::Images
         void Update(float deltaTime);
         int GetCurrentFrame() const;
         std::string GetSpriteName() const;
+        void SetFramesPerSecond(float framesPerSecond);
 
     private:
         std::string _imageName;

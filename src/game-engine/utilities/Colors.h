@@ -2,7 +2,7 @@
 
 #include <SDL3/SDL_pixels.h>
 
-namespace GameEngine::Utilities::Colors
+namespace GameEngine::Color
 {
     constexpr SDL_Color Red = {255, 0, 0, 255};
     constexpr SDL_Color Green = {0, 255, 0, 255};

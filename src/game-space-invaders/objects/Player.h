@@ -1,25 +1,32 @@
 #pragma once
 
+#include "EventQueue.h"
 #include "GameObject2D.h"
 #include "Image.h"
 
 using GameEngine::Objects::GameObject2D;
 using GameEngine::Images::Image;
+using GameEngine::Utilities::Event;
 
-class Player final : public GameObject2D
+namespace SpaceInvaders
 {
-public:
-    Player(float width, float height, const Vector2D& playerPos, float speed, SDL_Texture* texture, int screenWidth);
+    class Player final : public GameObject2D
+    {
+    public:
+        Player(float width, float height, const Vector2D& playerPos, float speed, SDL_Texture* texture, int screenWidth);
 
-    void HandleEvents(const SDL_Event& event) override;
-    void Update(float deltaTime) override;
-    void Render(SDL_Renderer* renderer) const override;
-private:
-    SDL_Texture* _playerImage;
-    float _speed;
-    int _screenWidth;
-    bool _isLeftPressed = false;
-    bool _isRightPressed = false;
-    int _movement;
-};
+        void HandleEvents(const SDL_Event& event) override;
+        void Update(float deltaTime) override;
+        void Render(SDL_Renderer* renderer) const override;
+    private:
+        void OnGameOver(const Event& event);
 
+        SDL_Texture* _playerImage;
+        float _speed;
+        int _screenWidth;
+        int _movement = 0;
+        bool _isLeftPressed = false;
+        bool _isRightPressed = false;
+        bool _isGameOver = false;
+    };
+}

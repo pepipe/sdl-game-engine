@@ -1,5 +1,6 @@
 #include "SpaceInvadersGame.h"
 
+#include "EventTypes.h"
 #include "SpaceInvadersConfig.h"
 #include "Player.h"
 
@@ -21,10 +22,15 @@ namespace SpaceInvaders
 
         LoadAssets();
         CreateEnemies();
-        const auto player = std::make_shared<Player>(128.0f, 64.0f, Vector2D(width / 2.0f, height - 100.0f),
+        const auto player = std::make_shared<Player>(PLAYER_WIDTH, PLAYER_HEIGHT, Vector2D(width / 2.0f, height - PLAYER_BOTTOM_MARGIN),
             PLAYER_SPEED, _imageManager.GetTexture("Player"), width);
         _gameObjectManager.AddObject(player);
 
+        RegisterListener(EVENT_ENEMY_REACH_HORIZONTAL_END,
+            [this](const Event& event) { this->OnHorizontalEnd(event); });
+        RegisterListener(EVENT_ENEMY_REACH_VERTICAL_END,
+                    [this](const Event& event) { this->OnVerticalEnd(event); });
+        
         return true;
     }
 
@@ -64,8 +70,8 @@ namespace SpaceInvaders
             {
                 auto enemyPos = Vector2D(leftMargin + j * (enemyWidth + horizontalSpacing),
                                          0 + i * (enemyHeight + ENEMY_VERTICAL_SPACING));
-                auto enemy = std::make_shared<Enemy>(enemyWidth, enemyHeight, enemyPos, _spriteSheetManager,
-                                                     enemySpriteName, 2, 2.0f);
+                auto enemy = std::make_shared<Enemy>(enemyWidth, enemyHeight, enemyPos, _screenWidth, _screenHeight, 
+                                                    _spriteSheetManager, enemySpriteName, 2, 2.0f);
                 enemy->SetColor(enemyColor);
                 _gameObjectManager.AddObject(enemy);
                 _enemyLines[i][j] = enemy;
@@ -90,8 +96,29 @@ namespace SpaceInvaders
 
     SDL_Color SpaceInvadersGame::GetEnemyColor(const int line)
     {
-        if (line == 0) return ::GameEngine::Utilities::Colors::Magenta;
-        if (line > 0 && line < 3) return ::GameEngine::Utilities::Colors::Yellow;
-        return ::GameEngine::Utilities::Colors::White;
+        if (line == 0) return ::GameEngine::Color::Magenta;
+        if (line > 0 && line < 3) return ::GameEngine::Color::Yellow;
+        return ::GameEngine::Color::White;
     }
+
+    void SpaceInvadersGame::OnHorizontalEnd(const Event& event)
+    {
+        auto it = event.data.find("direction");
+        if (it != event.data.end() && std::holds_alternative<int>(it->second)) {
+            const auto direction = std::get<int>(it->second);
+            if(_lastDirection == direction) return;
+        
+            _lastDirection = direction;
+            AddEvent(Event(EVENT_MAKE_ENEMIES_CLOSER));
+        }
+    }
+
+    void SpaceInvadersGame::OnVerticalEnd(const Event& event)
+    {
+        if(_isGameOver) return;
+        
+        _isGameOver = true;
+        AddEvent(Event(EVENT_GAME_OVER));
+    }
+
 }

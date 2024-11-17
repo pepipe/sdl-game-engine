@@ -22,6 +22,11 @@ namespace GameEngine::Utilities
     class EventQueue
     {
     public:
+        ~EventQueue()
+        {
+            _listeners.clear();
+        }
+
         void AddEvent(const Event& event)
         {
             _events.push(event);

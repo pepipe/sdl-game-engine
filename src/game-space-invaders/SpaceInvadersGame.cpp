@@ -1,5 +1,7 @@
 #include "SpaceInvadersGame.h"
+
 #include "SpaceInvadersConfig.h"
+#include "Player.h"
 
 namespace SpaceInvaders
 {
@@ -19,6 +21,9 @@ namespace SpaceInvaders
 
         LoadAssets();
         CreateEnemies();
+        const auto player = std::make_shared<Player>(60.0f, 30.0f, Vector2D(.0f, .0f),
+            _imageManager.GetTexture("Player"));
+        _gameObjectManager.AddObject(player);
 
         return true;
     }
@@ -30,16 +35,8 @@ namespace SpaceInvaders
 
     void SpaceInvadersGame::RenderObjects()
     {
-        // //Draw images
-        // SDL_Texture* playerTexture = _imageManager.GetTexture("Player"); // Assume GetTexture loads or retrieves a texture
-        // float playerWidth, playerHeight;
-        // SDL_GetTextureSize(playerTexture, &playerWidth, &playerHeight);
-        // const SDL_FRect playerDstRect = {0.f, 0.f, playerWidth, playerHeight};
-        // SDL_RenderTexture(_renderer, playerTexture, nullptr, &playerDstRect);
-
         GameEngine::RenderObjects();
     }
-
 
     void SpaceInvadersGame::LoadAssets()
     {
@@ -65,9 +62,10 @@ namespace SpaceInvaders
             float enemyHeight = 64.0f;
             for (int j = 0; j < 10; ++j)
             {
-                auto enemyPos = Vector2D(leftMargin + j * (enemyWidth + horizontalSpacing), 0 + i * (enemyHeight + ENEMY_VERTICAL_SPACING));
+                auto enemyPos = Vector2D(leftMargin + j * (enemyWidth + horizontalSpacing),
+                                         0 + i * (enemyHeight + ENEMY_VERTICAL_SPACING));
                 auto enemy = std::make_shared<Enemy>(enemyWidth, enemyHeight, enemyPos, _spriteSheetManager,
-                                                            enemySpriteName, 2, 2.0f);
+                                                     enemySpriteName, 2, 2.0f);
                 enemy->SetColor(enemyColor);
                 _gameObjectManager.AddObject(enemy);
                 _enemyLines[i][j] = enemy;
@@ -77,24 +75,23 @@ namespace SpaceInvaders
 
     std::string SpaceInvadersGame::GetEnemyName(const int line)
     {
-        if(line == 0) return "Enemy1";
-        if(line > 0 && line < 3) return "Enemy2";
+        if (line == 0) return "Enemy1";
+        if (line > 0 && line < 3) return "Enemy2";
 
         return "Enemy3";
     }
 
     float SpaceInvadersGame::GetEnemyWidth(const int line)
     {
-        if(line == 0) return 64.0f;
+        if (line == 0) return 64.0f;
 
         return 128.0f;
     }
 
     SDL_Color SpaceInvadersGame::GetEnemyColor(const int line)
     {
-        if(line == 0) return ::GameEngine::Utilities::Colors::Magenta;
-        if(line > 0 && line < 3) return ::GameEngine::Utilities::Colors::Yellow;
+        if (line == 0) return ::GameEngine::Utilities::Colors::Magenta;
+        if (line > 0 && line < 3) return ::GameEngine::Utilities::Colors::Yellow;
         return ::GameEngine::Utilities::Colors::White;
     }
-
 }

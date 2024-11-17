@@ -21,8 +21,8 @@ namespace SpaceInvaders
 
         LoadAssets();
         CreateEnemies();
-        const auto player = std::make_shared<Player>(60.0f, 30.0f, Vector2D(.0f, .0f),
-            _imageManager.GetTexture("Player"));
+        const auto player = std::make_shared<Player>(128.0f, 64.0f, Vector2D(width / 2.0f, height - 100.0f),
+            PLAYER_SPEED, _imageManager.GetTexture("Player"), width);
         _gameObjectManager.AddObject(player);
 
         return true;

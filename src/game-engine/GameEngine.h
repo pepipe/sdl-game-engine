@@ -3,7 +3,7 @@
 #include <SDL3/SDL.h>
 #include "Audio.h"
 #include "EventQueue.h"
-#include "Images.h"
+#include "Image.h"
 #include "SpriteSheet.h"
 #include "GameObjectManager.h"
 #include "Texts.h"

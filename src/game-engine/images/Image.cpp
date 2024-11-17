@@ -1,4 +1,4 @@
-#include "Images.h"
+#include "Image.h"
 
 #include <ranges>
 #include <SDL3_image/SDL_image.h>

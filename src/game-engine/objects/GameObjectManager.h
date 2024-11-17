@@ -11,6 +11,7 @@ namespace GameEngine::Objects
     public:
         void AddObject(std::shared_ptr<GameObject> obj);
         void RemoveObject(const std::shared_ptr<GameObject>& obj);
+        void ClearObjects();
         void HandleEvents(const SDL_Event& event) const;
         void Update(float deltaTime) const;
         void Render(SDL_Renderer* renderer) const;

@@ -14,6 +14,11 @@ namespace GameEngine::Objects
         }
     }
 
+    void GameObjectManager::ClearObjects()
+    {
+        _gameObjects.clear();
+    }
+
     void GameObjectManager::HandleEvents(const SDL_Event& event) const
     {
         for (const auto& obj : _gameObjects)

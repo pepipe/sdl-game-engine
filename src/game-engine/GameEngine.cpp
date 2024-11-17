@@ -97,18 +97,6 @@ namespace GameEngine
         return _textInit;
     }
 
-    void GameEngine::HandleEvents()
-    {
-        SDL_Event event;
-        while (SDL_PollEvent(&event))
-        {
-            if (event.type == SDL_EVENT_QUIT) _isRunning = false;
-
-            //handle events in game objects
-            _gameObjectManager.HandleEvents(event);
-        }
-    }
-
     void GameEngine::Update()
     {
         if (_capFPS)
@@ -145,6 +133,19 @@ namespace GameEngine
         SDL_DestroyRenderer(_renderer);
         SDL_DestroyWindow(_window);
         SDL_Quit();
+    }
+
+    void GameEngine::HandleEvents()
+    {
+        SDL_Event event;
+        while (SDL_PollEvent(&event))
+        {
+            if (event.type == SDL_EVENT_QUIT) _isRunning = false;
+
+            HandleCustomEvents(event);
+            //handle events in game objects
+            _gameObjectManager.HandleEvents(event);
+        }
     }
 
     void GameEngine::Render()

@@ -37,7 +37,7 @@ namespace GameEngine
         bool InitSpriteSheet();
         bool InitText();
 
-        virtual void HandleEvents();
+        virtual void HandleCustomEvents(const SDL_Event& event){}
         virtual void Update();
         virtual void RenderObjects();
 
@@ -53,6 +53,7 @@ namespace GameEngine
         Text _textManager;
 
     private:
+        void HandleEvents();
         void Render();
 
         const int FPS = 60;

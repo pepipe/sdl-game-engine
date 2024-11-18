@@ -13,6 +13,10 @@ namespace SpaceInvaders
     {
         GameEngine::GameEngine::RegisterListener(EVENT_GAME_OVER,
             [this](const Event& event) { this->OnGameOver(event); });
+
+        for (auto& bullet : _bullets) {
+            bullet = std::make_shared<Bullet>(5.0f, 15.0f, Vector2D(300, 800));
+        }
     }
 
     void Player::HandleEvents(const SDL_Event& event)
@@ -28,6 +32,10 @@ namespace SpaceInvaders
             else if (event.key.key == SDLK_RIGHT || event.key.key == SDLK_D)
             {
                 _isRightPressed = true;
+            }
+            else if(event.key.key == SDLK_SPACE)
+            {
+                FireBullet();
             }
         }
         else if (event.type == SDL_EVENT_KEY_UP)
@@ -72,10 +80,34 @@ namespace SpaceInvaders
         SDL_RenderTexture(renderer, _playerImage, nullptr, &playerDstRect);
     }
 
+    std::array<std::shared_ptr<Bullet>, 10>& Player::GetBullets()
+    {
+        return _bullets;
+    }
+
     void Player::OnGameOver(const Event& event)
     {
         _movement = 0;
         _isGameOver = true;
+    }
+
+    void Player::FireBullet()
+    {
+        const auto bullet = GetNextAvailableBullet();
+        if(bullet == nullptr) return;
+
+        bullet->SetPosition(Vector2D(_position.x + _width / 2.0f, _position.y - _height));
+        bullet->SetActive(true);
+    }
+
+    std::shared_ptr<Bullet> Player::GetNextAvailableBullet()
+    {
+        for(auto& bullet : _bullets)
+        {
+            if(!bullet->IsActive()) return bullet;
+        }
+
+        return nullptr;
     }
 
 }

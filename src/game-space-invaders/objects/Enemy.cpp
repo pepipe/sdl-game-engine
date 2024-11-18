@@ -22,11 +22,6 @@ namespace SpaceInvaders
             [this](const Event& event) { this->OnGameOver(event); });
     }
 
-    void Enemy::SetColor(const SDL_Color color)
-    {
-        _spriteColor = color;
-    }
-
     void Enemy::Update(const float deltaTime)
     {
         _timeAccumulator += deltaTime;
@@ -63,6 +58,11 @@ namespace SpaceInvaders
         const SDL_FRect dstRect = {_position.x, _position.y, srcRect->w, srcRect->h};
         SDL_SetTextureColorMod(texture, _spriteColor.r, _spriteColor.g, _spriteColor.b);
         SDL_RenderTexture(renderer, texture, srcRect, &dstRect);
+    }
+
+    void Enemy::SetColor(const SDL_Color color)
+    {
+        _spriteColor = color;
     }
 
     void Enemy::OnMakeEnemiesCloser(const Event& event)

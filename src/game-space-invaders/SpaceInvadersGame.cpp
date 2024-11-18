@@ -64,6 +64,10 @@ namespace SpaceInvaders
         const auto player = std::make_shared<Player>(PLAYER_WIDTH, PLAYER_HEIGHT, Vector2D(_screenWidth / 2.0f, _screenHeight - PLAYER_BOTTOM_MARGIN),
             PLAYER_SPEED, _imageManager.GetTexture("Player"), _screenWidth);
         _gameObjectManager.AddObject(player);
+        for(auto& bullet : player->GetBullets())
+        {
+            _gameObjectManager.AddObject(bullet);
+        }
 
         RegisterListener(EVENT_ENEMY_REACH_HORIZONTAL_END,
             [this](const Event& event) { this->OnHorizontalEnd(event); });

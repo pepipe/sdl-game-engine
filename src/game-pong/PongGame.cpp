@@ -60,18 +60,7 @@ namespace Pong
 
         if(!_ball || !_player1 || !_player2) return;
 
-        // Check for collisions
-        if (Collision2D::CheckCollision(_ball->GetRect(), _player1->GetRect())) {
-            // Handle collision with player1
-            const auto newPos = Vector2D(_player1->GetPosition().x + _player1->GetWidth(), _ball->GetPosition().y);
-            HandleBallPaddleCollision(newPos);
-        }
-        if (Collision2D::CheckCollision(_ball->GetRect(), _player2->GetRect())) {
-            // Handle collision with player2
-            const auto newPos = Vector2D(_player2->GetPosition().x - _ball->GetWidth(), _ball->GetPosition().y);
-            HandleBallPaddleCollision(newPos);
-        }
-
+        CheckCollisions();
         BallCheckHorizontalExit();
     }
 
@@ -89,6 +78,21 @@ namespace Pong
         _audioManager.LoadSound(AUDIO_SCORE, "assets/audio/score.wav");
         //Fonts
         _textManager.LoadFont(FONT_SCORE, "assets/fonts/DS-DIGIT.ttf", 100.0f);
+    }
+
+    void PongGame::CheckCollisions()
+    {
+        // Check for collisions
+        if (Collision2D::CheckCollision(_ball->GetRect(), _player1->GetRect())) {
+            // Handle collision with player1
+            const auto newPos = Vector2D(_player1->GetPosition().x + _player1->GetWidth(), _ball->GetPosition().y);
+            HandleBallPaddleCollision(newPos);
+        }
+        if (Collision2D::CheckCollision(_ball->GetRect(), _player2->GetRect())) {
+            // Handle collision with player2
+            const auto newPos = Vector2D(_player2->GetPosition().x - _ball->GetWidth(), _ball->GetPosition().y);
+            HandleBallPaddleCollision(newPos);
+        }
     }
 
     void PongGame::UpdateScoreTextures(SDL_Renderer* renderer)

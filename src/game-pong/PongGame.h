@@ -18,6 +18,7 @@ namespace Pong
         void RenderObjects() override;
 
         void LoadAssets();
+        void CheckCollisions();
         void UpdateScoreTextures(SDL_Renderer* renderer);
         void DrawNet(SDL_Renderer* renderer) const;
         void DrawScore(SDL_Renderer* renderer) const;

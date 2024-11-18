@@ -2,6 +2,7 @@
 
 #include "Enemy.h"
 #include "GameEngine.h"
+#include "Player.h"
 
 namespace SpaceInvaders
 {
@@ -17,7 +18,9 @@ namespace SpaceInvaders
 
         void StartGame();
         void ResetGame();
+        void GameOver();
         void LoadAssets();
+        void CheckCollisions();
         void CreateEnemies();
         static std::string GetEnemyName(int line);
         static float GetEnemyWidth(int line);
@@ -26,6 +29,7 @@ namespace SpaceInvaders
         void OnVerticalEnd(const Event& event);
 
         std::shared_ptr<Enemy> _enemyLines[5][12];
+        std::shared_ptr<Player> _player = nullptr;
         int _lastDirection = 0;
         bool _isGameOver = false;
         SDL_Texture* _gameOverText = nullptr;

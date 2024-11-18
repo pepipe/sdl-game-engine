@@ -24,6 +24,8 @@ namespace SpaceInvaders
 
     void Enemy::Update(const float deltaTime)
     {
+        if(!_active) return;
+
         _timeAccumulator += deltaTime;
         if (_timeAccumulator >= _moveWaitTime) {
             _position.x += _movement * 10.f;
@@ -52,6 +54,8 @@ namespace SpaceInvaders
 
     void Enemy::Render(SDL_Renderer* renderer) const
     {
+        if(!_active) return;
+
         const auto imageName = _spriteAnimation.GetSpriteName();
         const auto texture = _spriteSheet.GetTexture(imageName);
         const SDL_FRect* srcRect = _spriteSheet.GetSpriteFRect(imageName, _spriteAnimation.GetCurrentFrame());
@@ -63,6 +67,16 @@ namespace SpaceInvaders
     void Enemy::SetColor(const SDL_Color color)
     {
         _spriteColor = color;
+    }
+
+    void Enemy::SetActive(const bool IsActive)
+    {
+        _active = IsActive;
+    }
+
+    bool Enemy::IsActive() const
+    {
+        return _active;
     }
 
     void Enemy::OnMakeEnemiesCloser(const Event& event)

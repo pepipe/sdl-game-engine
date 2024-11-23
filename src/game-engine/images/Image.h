@@ -11,6 +11,7 @@ namespace GameEngine::Images
         static bool Init();
         void LoadTexture(const std::string& name, const std::string& path, SDL_Renderer* renderer);
         SDL_Texture* GetTexture(const std::string& name) const;
+        bool GetTextureSize(const std::string& name, float& width, float& height) const;
         void Clean();
 
     protected:

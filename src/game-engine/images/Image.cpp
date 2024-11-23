@@ -43,6 +43,18 @@ namespace GameEngine::Images
         return nullptr;
     }
 
+    bool Image::GetTextureSize(const std::string& name, float& width, float& height) const
+    {
+        const auto it = _textures.find(name);
+        if (it != _textures.end() && it->second != nullptr) {
+            SDL_GetTextureSize(it->second, &width, &height);
+            return true;
+        }
+
+        width = 0;
+        height = 0;
+        return false;
+    }
 
     void Image::Clean()
     {

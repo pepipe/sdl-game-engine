@@ -64,6 +64,19 @@ namespace GameEngine::Images
         return nullptr;
     }
 
+    bool SpriteSheet::GetTextureSize(const std::string& name, float& width, float& height) const
+    {
+        const auto it = _textures.find(name);
+        if (it != _textures.end() && it->second != nullptr) {
+            SDL_GetTextureSize(it->second, &width, &height);
+            return true;
+        }
+
+        width = 0;
+        height = 0;
+        return false;
+    }
+
     const SDL_FRect* SpriteSheet::GetSpriteFRect(const std::string& name, const int frame) const
     {
         if (const auto it = _spriteFrames.find(name); it != _spriteFrames.end() && frame < it->second.size())

@@ -36,6 +36,16 @@ namespace GameEngine::Objects
             return {_position.x, _position.y, _width, _height};
         }
 
+        Vector2D GetPosition() const
+        {
+            return _position;
+        }
+
+        void SetPosition(const Vector2D& position)
+        {
+            _position = position;
+        }
+
     protected:
         Vector2D _position;
     };

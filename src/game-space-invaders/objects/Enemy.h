@@ -20,14 +20,12 @@ namespace SpaceInvaders
     public:
         Enemy(float width, float height, const Vector2D& enemyPos, int screenWidth, int screenHeight,
             SpriteSheet& spriteSheet, const std::string& spriteName, int totalFrames, float framesPerSecond);
-        ~Enemy() override
-        {
-            std::cout << "Destroying Enemy" << std::endl;
-        }
 
-        void SetColor(SDL_Color color);
         void Update(float deltaTime) override;
         void Render(SDL_Renderer* renderer) const override;
+        void SetColor(SDL_Color color);
+        void SetActive(bool IsActive);
+        bool IsActive() const;
 
     private:
         void OnMakeEnemiesCloser(const Event& event);
@@ -39,6 +37,7 @@ namespace SpaceInvaders
         int _screenHeight;
         float _framesPerSecond;
         SDL_Color _spriteColor = GameEngine::Color::White;
+        bool _active = true;
         float _timeAccumulator = 0.0f;
         int _movement = 1;
         float _moveWaitTime = ENEMY_MOVE_WAIT_TIME;

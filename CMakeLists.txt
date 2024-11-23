@@ -8,11 +8,11 @@ project("SDLEngine")
 # Set the C++ standard and compiler flags
 set(CMAKE_CXX_STANDARD 20)
 
-# Define paths to SDL and SDL_mixer prebuilt libraries
-set(SDL_DIR "${CMAKE_SOURCE_DIR}/sdk/sdl")
-set(SDL_IMAGE_DIR "${CMAKE_SOURCE_DIR}/sdk/sdl_image")
-set(SDL_MIXER_DIR "${CMAKE_SOURCE_DIR}/sdk/sdl_mixer")
-set(SDL_TTF_DIR "${CMAKE_SOURCE_DIR}/sdk/sdl_ttf")
+# Define paths to SDL prebuilt libraries
+set(SDL_DIR "${CMAKE_SOURCE_DIR}/libs/sdl")
+set(SDL_IMAGE_DIR "${CMAKE_SOURCE_DIR}/libs/sdl_image")
+set(SDL_MIXER_DIR "${CMAKE_SOURCE_DIR}/libs/sdl_mixer")
+set(SDL_TTF_DIR "${CMAKE_SOURCE_DIR}/libs/sdl_ttf")
 
 # Add SDL includes and libraries based on the build configuration
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
@@ -35,13 +35,13 @@ else()
   set(SDL_TTF_LIB_IMPORT "${SDL_TTF_DIR}/release/SDL3_ttf.lib")
 endif()
 
-# Add include directories for SDL and SDL_mixer
+# Add include directories for SDL
 include_directories("${SDL_DIR}/include")
 include_directories("${SDL_IMAGE_DIR}/include")
 include_directories("${SDL_MIXER_DIR}/include")
 include_directories("${SDL_TTF_DIR}/include")
 
-# Link against the prebuilt SDL and SDL_mixer libraries
+# Link against the prebuilt SDL libraries
 add_library(SDL3 SHARED IMPORTED)
 set_target_properties(SDL3 PROPERTIES
         IMPORTED_LOCATION "${SDL_LIB}"

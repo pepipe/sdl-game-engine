@@ -1,5 +1,7 @@
 #pragma once
 
+#include <array>
+#include "Bullet.h"
 #include "EventQueue.h"
 #include "GameObject2D.h"
 #include "Image.h"
@@ -18,13 +20,17 @@ namespace SpaceInvaders
         void HandleEvents(const SDL_Event& event) override;
         void Update(float deltaTime) override;
         void Render(SDL_Renderer* renderer) const override;
+        std::array<std::shared_ptr<Bullet>, 10>& GetBullets();
     private:
         void OnGameOver(const Event& event);
+        void FireBullet();
+        std::shared_ptr<Bullet> GetNextAvailableBullet();
 
         SDL_Texture* _playerImage;
         float _speed;
         int _screenWidth;
         int _movement = 0;
+        std::array<std::shared_ptr<Bullet>, 10> _bullets;
         bool _isLeftPressed = false;
         bool _isRightPressed = false;
         bool _isGameOver = false;

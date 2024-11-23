@@ -1,9 +1,12 @@
 #include "SpaceInvadersGame.h"
 
+#include "Collision2D.h"
 #include "EventTypes.h"
 #include "SpaceInvadersConfig.h"
 #include "Player.h"
 #include "Colors.h"
+
+using GameEngine::Physics::Collision2D;
 
 namespace SpaceInvaders
 {
@@ -45,7 +48,11 @@ namespace SpaceInvaders
 
     void SpaceInvadersGame::Update()
     {
+        if(_isGameOver) return;
+        
         GameEngine::Update();
+
+        CheckCollisions();
     }
 
     void SpaceInvadersGame::RenderObjects()
@@ -61,9 +68,13 @@ namespace SpaceInvaders
     void SpaceInvadersGame::StartGame()
     {
         CreateEnemies();
-        const auto player = std::make_shared<Player>(PLAYER_WIDTH, PLAYER_HEIGHT, Vector2D(_screenWidth / 2.0f, _screenHeight - PLAYER_BOTTOM_MARGIN),
+        _player = std::make_shared<Player>(PLAYER_WIDTH, PLAYER_HEIGHT, Vector2D(_screenWidth / 2.0f, _screenHeight - PLAYER_BOTTOM_MARGIN),
             PLAYER_SPEED, _imageManager.GetTexture("Player"), _screenWidth);
-        _gameObjectManager.AddObject(player);
+        _gameObjectManager.AddObject(_player);
+        for(auto& bullet : _player->GetBullets())
+        {
+            _gameObjectManager.AddObject(bullet);
+        }
 
         RegisterListener(EVENT_ENEMY_REACH_HORIZONTAL_END,
             [this](const Event& event) { this->OnHorizontalEnd(event); });
@@ -74,6 +85,12 @@ namespace SpaceInvaders
     void SpaceInvadersGame::ResetGame()
     {
         ClearEventQueue();
+        // Nullify the bullets
+        for (auto& bullet : _player->GetBullets())
+        {
+            bullet = nullptr;
+        }
+        _player = nullptr; 
         _gameObjectManager.ClearObjects();
         SDL_Delay(100);
         _isGameOver = false;
@@ -81,6 +98,13 @@ namespace SpaceInvaders
         SDL_Delay(100);
     }
 
+    void SpaceInvadersGame::GameOver()
+    {
+        AddEvent(Event(EVENT_GAME_OVER));
+        _gameOverText = _textManager.CreateTextSurface("DIGIT-LARGE", "GAME OVER", ::GameEngine::Color::White, _renderer);
+        _isGameOver = true;
+    }
+    
     void SpaceInvadersGame::LoadAssets()
     {
         //Images
@@ -92,6 +116,33 @@ namespace SpaceInvaders
         //Audio
         //Fonts
         _textManager.LoadFont("DIGIT-LARGE", "assets/fonts/DS-DIGIT.ttf", 100.0f);
+    }
+
+    void SpaceInvadersGame::CheckCollisions()
+    {
+        int enemiesAlive = 0;
+        for (int i = 0; i < 5; ++i)
+        {
+            for (int j = 0; j < 10; ++j)
+            {
+                if(!_enemyLines[i][j]->IsActive()) continue;
+
+                ++enemiesAlive;
+                for(const auto& bullet : _player->GetBullets())
+                {
+                    if(!bullet->IsActive()) continue;
+
+                    if(Collision2D::CheckCollision(bullet->GetRect(), _enemyLines[i][j]->GetRect()))
+                    {
+                        _gameObjectManager.RemoveObject(_enemyLines[i][j]);
+                        _enemyLines[i][j]->SetActive(false);
+                        bullet->SetActive(false);
+                    }
+                }
+            }
+        }
+
+        if(enemiesAlive == 0) GameOver();
     }
 
     void SpaceInvadersGame::CreateEnemies()
@@ -107,7 +158,7 @@ namespace SpaceInvaders
             for (int j = 0; j < 10; ++j)
             {
                 auto enemyPos = Vector2D(leftMargin + j * (enemyWidth + horizontalSpacing),
-                                         0 + i * (enemyHeight + ENEMY_VERTICAL_SPACING));
+                                         enemyHeight + i * (enemyHeight + ENEMY_VERTICAL_SPACING));
                 auto enemy = std::make_shared<Enemy>(enemyWidth, enemyHeight, enemyPos, _screenWidth, _screenHeight, 
                                                     _spriteSheetManager, enemySpriteName, 2, 2.0f);
                 enemy->SetColor(enemyColor);
@@ -155,9 +206,7 @@ namespace SpaceInvaders
     {
         if(_isGameOver) return;
 
-        AddEvent(Event(EVENT_GAME_OVER));
-        _gameOverText = _textManager.CreateTextSurface("DIGIT-LARGE", "GAME OVER", ::GameEngine::Color::White, _renderer);
-        _isGameOver = true;
+        GameOver();
     }
 
 }
